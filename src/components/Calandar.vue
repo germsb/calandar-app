@@ -1,0 +1,127 @@
+<template>
+  <div class="flex-grow flex bg-pink-500 overflow-hidden">
+    
+    <div id="tt" class="flex-grow flex overflow-auto">
+     <!-- bar sticky vertical gauche -->
+      <div class="sticky left-0 flex flex-col z-10 shadow-md">
+        <div class="sticky top-0 bg-white w-12 h-12  flex-shrink-0">
+          <!-- <div class="absolute h-full right-0 bottom-0 w-2 -mr-2 mb-px" style="background: linear-gradient(to right, #f7fafc, transparent);"></div>
+          <div class="absolute w-full bottom-0 right-0 h-2 -mb-2 mr-px" style="background: linear-gradient(to bottom, #f7fafc, transparent);"></div> -->
+        </div> 
+        <div
+          v-for="i in getHourArray"
+          :key="i"
+          class="flex-1 flex justify-center items-center bg-white w-12 min-h-14 font-bold text-sm"
+        >
+          {{i}}h
+        </div>
+      </div>
+     <!-- collumn date et cellule -->
+      <div
+        v-for="(date, i) in rref"
+        :key="date + 'f'"
+        :id="date"
+        class="flex flex-col"
+        style="flex: 0 0 max(13.85%, 170px);"
+        
+      >
+        <!-- bar sticky haut -->
+        <div
+          class="sticky top-0 h-12 flex-shrink-0 flex justify-center items-center px-2 bg-white border-b font-bold text-base"
+        >
+          {{getDate(date)}}
+        </div>
+        <!-- cellule -->
+        <div
+          v-for="i in getHourArray"
+          :key="i"
+          class="flex-1 min-h-14 bg-gray-200 shadow-inner"
+        >
+          <div
+            v-if="!isOffHour(i)"
+            :class="[isPastHour(date, i)]"
+            class="h-full border-b border-r p-1 hover:bg-gray-200 hover:shadow-inner cursor-pointer">
+            4/4
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { addDays, subDays, format, getISODay, isThisHour, isPast, isToday, setHours, getHours, setDay } from "date-fns";
+import { fr } from "date-fns/locale";
+import { computed, watchEffect, ref, onMounted } from "vue";
+export default {
+  props: {
+    timeSlotsStart: { type: Number, default: 9 },
+    timeSlotsEnd: { type: Number, default: 18 },
+    offHour: { type: Array, default: [13] },
+    selectedDate: { type: Number, default: Date.now()}
+  },
+  setup({ timeSlotsStart, timeSlotsEnd, offHour, selectedDate }) {
+
+    const getHourArray = computed(() => {
+      const h = [];
+      for (let i = timeSlotsStart; i <= timeSlotsEnd; i++) {
+        h.push(i);
+      }
+      return h;
+    });
+
+    const rref = ref([]);
+    let elemId = "";
+    watchEffect(() => {
+      elemId = setDay(selectedDate,1,{weekStartsOn: 1}).toString() 
+      console.log(elemId);
+      console.log(getISODay(selectedDate))
+      const date = addDays(selectedDate, -Math.abs(getISODay(selectedDate) + 6 ));
+      for (let i = 0; i < 21; i++) {
+        console.log(i);
+         const date2 = addDays(date, i);
+         rref.value.push(date2);
+      console.log(format(date2, "cccc dd LLL", { locale: fr }));
+    
+      }
+    })
+
+    onMounted(() => {
+      document.getElementById(elemId).scrollIntoView({behavior: "auto", block: "start", inline: "start"});
+      document.getElementById("tt").scrollBy({left: -48}) 
+    })
+
+    const calandarData = computed(() => {
+      console.log(getISODay(selectedDate))
+    });
+    
+    function isPastHour(date, hour) {
+      if(isToday(date)){
+        const localHour = getHours(Date.now())
+        return localHour > hour ? 'bg-gray-100 border-gray-300' : localHour === hour? 'bg-indigo-100' : 'bg-white'
+      } else {
+        return isPast(date)? 'bg-gray-100 border-gray-300' : 'bg-white';
+      }
+    }
+    function isOffHour(hour) {
+      return offHour.some((v) => v === hour);
+    }
+
+    function getDate(index) {
+      //const date = addDays(Date.now(), index);
+      return format(index, "ccc dd LLL", { locale: fr });
+    }
+    function cc(id, id2) {
+      console.log(id, id2);
+    }
+    return { getDate, cc, getHourArray, isOffHour, rref, isPastHour };
+  },
+}
+</script>
+
+<style>
+.shasha {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+</style>
