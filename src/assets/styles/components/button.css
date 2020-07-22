@@ -1,0 +1,24 @@
+.btn {
+    @apply rounded capitalize px-4 py-1 text-lg font-bold;
+}
+
+.btn:focus {
+    @apply outline-none;
+}
+
+.btn-blue {
+    @apply bg-blue-400 text-white;
+}
+
+.btn-blue:hover {
+    @apply bg-blue-600 ;
+    
+}
+.btn-gray {
+    @apply bg-gray-100 text-gray-700;
+}
+
+.btn-gray:hover {
+    @apply bg-gray-600 text-gray-100 ;
+    
+}

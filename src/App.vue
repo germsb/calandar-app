@@ -1,6 +1,13 @@
 <template>
   <!-- header -->
-   <div class=" h-16 flex-shrink-0 bg-gray-700 text-xl text-white flex justify-start items-center pl-2">Header</div>
+   <div class=" h-16 flex-shrink-0 bg-gray-700 text-xl text-white flex justify-start items-center pl-2">
+     <!-- boutton defini a la volé -->
+     <button class="rounded capitalize px-4 py-1 text-lg font-bold bg-blue-400 text-white hover:bg-blue-600 focus:outline-none">hello</button>
+     <!-- defini dans ./assets/styles/components/button.css -->
+     <button class="ml-3 btn btn-blue">hello</button>
+     <button class="ml-3 btn btn-gray">hello</button>
+     
+   </div>
   
   <!-- <agenda /> -->
   <div class="flex-grow flex bg-pink-500 overflow-hidden">
@@ -25,7 +32,7 @@
         v-for="i in 20"
         :key="i + 'f'"
         class="flex flex-col"
-        style="flex: 0 0 max(14.28%, 180px);"
+        style="flex: 0 0 max(13.69%, 150px);"
         
       >
         <!-- bar sticky haut -->
