@@ -4,10 +4,7 @@
     <div id="tt" class="flex-grow flex overflow-auto">
      <!-- bar sticky vertical gauche -->
       <div class="sticky left-0 flex flex-col z-10 shadow-md">
-        <div class="sticky top-0 bg-white w-12 h-12  flex-shrink-0">
-          <!-- <div class="absolute h-full right-0 bottom-0 w-2 -mr-2 mb-px" style="background: linear-gradient(to right, #f7fafc, transparent);"></div>
-          <div class="absolute w-full bottom-0 right-0 h-2 -mb-2 mr-px" style="background: linear-gradient(to bottom, #f7fafc, transparent);"></div> -->
-        </div> 
+        <div class="sticky top-0 bg-white w-12 h-12  flex-shrink-0"/> 
         <div
           v-for="i in getHourArray"
           :key="i"
@@ -40,8 +37,8 @@
           <div
             v-if="!isOffHour(i)"
             :class="[isPastHour(date, i)]"
-            class="h-full border-b border-r p-1 hover:bg-gray-200 hover:shadow-inner cursor-pointer">
-            4/4
+            class="h-full border-b border-r p-2  hover:bg-green-100 hover:shadow-inner font-bold text-gray-600 text-sm cursor-pointer">
+            <div class="w-6 h-5 shadow-md rounded bg-blue-500 text-xs text-white font-bold tracking-widest flex justify-center items-center">4/4</div>
           </div>
           
         </div>
