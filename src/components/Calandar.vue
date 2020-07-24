@@ -6,14 +6,43 @@
       <div class="w-12 min-h-full h-full sticky flex-shrink-0 left-0 z-20">
         <div class="flex flex-col min-h-full shadow-md">
           <div class="h-12 bg-white sticky top-0"></div>
-          <div v-for="i in 10" :key="i" class="min-h-14 flex-grow bg-white flex items-center justify-center">{{i}}</div>
+          <div
+            v-for="i in getHourArray"
+            :key="i" 
+            class="min-h-14 flex-grow bg-white flex items-center justify-center font-bold text-sm"
+          >
+            {{i}}h
+          </div>
 
         </div>
       </div>
-      <div v-for="i in 20" :key="i" class="flex-shrink-0 min-h-full h-full" style="width: max(13.85%, 170px);">
+      <div 
+        v-for="(date, i) in rref"
+        :key="date + 'f'"
+        :id="date"
+        class="flex-shrink-0 min-h-full h-full"
+        style="width: max(13.85%, 170px);"
+      >
         <div class="flex flex-col min-h-full">
-          <div class="h-12 bg-red-400 border-b border-r sticky top-0 flex justify-center items-center">sticky</div>
-          <div v-for="i in 10" :key="i" class=" min-h-14 flex-grow border-b border-r bg-white">{{i}}</div>
+          
+          <div class="h-12 border-r sticky top-0 flex justify-center items-center px-2 bg-white border-b font-bold text-base">
+            {{getDate(date)}}
+          </div>
+
+          <div
+            v-for="i in getHourArray"
+            :key="i"
+            class="min-h-14 flex-grow flex">
+            <div
+            v-if="!isOffHour(i)"
+            :class="[isPastHour(date, i)]"
+            class="flex-grow border-b border-r p-2 hover:bg-green-100 hover:shadow-inner font-bold text-gray-600 text-sm cursor-pointer">
+            <div class="w-32 h-5 rounded bg-gray-300 shadow-inner">
+              <div class="w-6 h-5 rounded bg-blue-400 text-xs text-white font-bold tracking-widest flex justify-center items-center">4/4</div>
+            </div>
+            
+          </div>
+          </div>
         </div>
       </div>
      
