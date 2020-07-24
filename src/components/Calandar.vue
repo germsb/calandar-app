@@ -1,10 +1,79 @@
 <template>
   <div class="flex-grow flex bg-pink-500 overflow-hidden">
     
-    <div id="tt" class="flex-grow flex overflow-auto">
+    <div id="tt" class="min-h-full min-w-full bg-gray-200 overflow-auto flex">
+
+      <div class="w-12 min-h-full h-full sticky flex-shrink-0 left-0 shadow-md z-20">
+        <div class="flex flex-col min-h-full">
+        <div class="w-full h-12 bg-blue-400 border-b sticky top-0"></div>
+        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
+        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
+        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
+        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
+        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
+        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
+        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
+        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
+        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
+        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
+        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
+        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
+        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
+        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
+        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
+        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
+        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
+        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
+        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
+        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
+        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
+        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
+        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
+        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
+        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
+        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
+        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
+        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
+        </div>
+      </div>
+      <div v-for="i in 20" :key="i" class="w-32 flex-shrink-0 min-h-full h-full">
+        <div class="flex flex-col min-h-full">
+        <div class="w-full h-12 bg-red-400 border-b border-r sticky top-0"></div>
+        <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
+        <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
+        <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
+        <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
+        <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
+        <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
+        <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
+        <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
+        <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
+        <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
+        <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
+        <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
+        <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
+        <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
+         <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
+        <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
+        <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
+        <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
+        <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
+        <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
+        <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
+        <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
+        <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
+        <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
+        <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
+        <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
+        <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
+        <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
+        </div>
+      </div>
+     
+
      <!-- bar sticky vertical gauche -->
-      <div class="sticky left-0 flex flex-col z-10 shadow-md">
-        <div class="sticky top-0 bg-white w-12 h-12  flex-shrink-0"/> 
+      <!-- <div class="sticky inline left-0 z-10 shadow-md">
+        <div class="sticky top-0 bg-white w-12 h-12"/> 
         <div
           v-for="i in getHourArray"
           :key="i"
@@ -13,22 +82,22 @@
           {{i}}h
         </div>
       </div>
-     <!-- collumn date et cellule -->
+     
       <div
         v-for="(date, i) in rref"
         :key="date + 'f'"
         :id="date"
-        class="flex flex-col"
-        style="flex: 0 0 max(13.85%, 170px);"
+        class="inline"
+        style="max-width: max(13.85%, 170px);"
         
       >
-        <!-- bar sticky haut -->
+        
         <div
           class="sticky top-0 h-12 flex-shrink-0 flex justify-center items-center px-2 bg-white border-b font-bold text-base"
         >
           {{getDate(date)}}
         </div>
-        <!-- cellule -->
+        
         <div
           v-for="i in getHourArray"
           :key="i"
@@ -44,8 +113,8 @@
             
           </div>
           
-        </div>
-      </div>
+        </div> 
+      </div> -->
     </div>
   </div>
 </template>
