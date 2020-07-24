@@ -7,7 +7,7 @@
      <button class="ml-3 btn btn-blue">hello</button>
      <button class="ml-3 btn btn-gray">hello</button>
      <input
-     class="ml-3 rounded-md shadow-inner border-2 border-blue-600 bg-gray-200 focus:outline-none px-3 py-1 text-gray-900 placeholder-gray-800"
+     class="ml-3 rounded-md shadow-inner border-2 border-blue-600 bg-blue-600 focus:bg-white focus:outline-none px-3 py-1 text-gray-900 placeholder-white focus:placeholder-gray-700"
      type="text"
      placeholder="Rechercher une reservation"
      spellcheck="false"/>

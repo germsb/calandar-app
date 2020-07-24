@@ -38,7 +38,10 @@
             v-if="!isOffHour(i)"
             :class="[isPastHour(date, i)]"
             class="h-full border-b border-r p-2  hover:bg-green-100 hover:shadow-inner font-bold text-gray-600 text-sm cursor-pointer">
-            <div class="w-6 h-5 shadow-md rounded bg-blue-500 text-xs text-white font-bold tracking-widest flex justify-center items-center">4/4</div>
+            <div class="w-32 h-5 rounded bg-gray-300 shadow-inner">
+              <div class="w-6 h-5 rounded bg-blue-400 text-xs text-white font-bold tracking-widest flex justify-center items-center">4/4</div>
+            </div>
+            
           </div>
           
         </div>
