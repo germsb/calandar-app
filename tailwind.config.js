@@ -10,6 +10,10 @@ module.exports = {
         },
         boxShadow: {
           down: "inset 0 1px 5px 0 rgba(0, 0, 0, 0.3)"
+        },
+        colors: {
+          primary: 'var(--color-primary)',
+          secondary: 'var(--color-secondary)',
         }
       },
     },

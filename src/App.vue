@@ -6,11 +6,11 @@
      <!-- defini dans ./assets/styles/components/button.css -->
      <button class="ml-3 btn btn-blue">hello</button>
      <button class="ml-3 btn btn-gray">hello</button>
-     <input
-     class="ml-3 rounded-md shadow-inner border-2 border-blue-600 bg-blue-600 focus:bg-white focus:outline-none px-3 py-1 text-gray-900 placeholder-white focus:placeholder-gray-700"
-     type="text"
-     placeholder="Rechercher une reservation"
-     spellcheck="false"/>
+     <button class="ml-3 btn btn-primary mr-2">hello primary color</button>
+     <div> change primary color :</div>
+     <button class="rounded-full w-5 h-5 bg-orange-500 mx-2 focus:outline-none" @click="changeColor('#ed8936')"></button>
+     <button class="rounded-full w-5 h-5 bg-purple-500 focus:outline-none" @click="changeColor('#9f7aea')"></button>
+     
 
    </div>
   
@@ -30,6 +30,12 @@ export default {
   name: 'App',
   components: {
     "v-calandar": Calandar
+  },
+  setup() {
+    function changeColor(color) {
+      document.documentElement.style.setProperty('--color-primary', color);
+    }
+    return { changeColor }
   }
 }
 </script>

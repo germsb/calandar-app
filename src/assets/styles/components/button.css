@@ -22,3 +22,10 @@
     @apply bg-gray-600 text-gray-100 ;
     
 }
+
+.btn-primary {
+    @apply bg-primary text-white;
+}
+.btn-primary:hover {
+    filter: invert(70%);
+}
