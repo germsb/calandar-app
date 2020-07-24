@@ -1,10 +1,55 @@
 <template>
   <div class="flex-grow flex bg-pink-500 overflow-hidden">
     
-    <div id="tt" class="flex-grow flex overflow-auto">
+    <div id="tt" class="min-h-full min-w-full bg-gray-200 overflow-auto flex">
+
+      <div class="w-12 min-h-full h-full sticky flex-shrink-0 left-0 z-20">
+        <div class="flex flex-col min-h-full shadow-md">
+          <div class="h-12 bg-white sticky top-0"></div>
+          <div
+            v-for="i in getHourArray"
+            :key="i" 
+            class="min-h-14 flex-grow bg-white flex items-center justify-center font-bold text-sm"
+          >
+            {{i}}h
+          </div>
+
+        </div>
+      </div>
+      <div 
+        v-for="(date, i) in rref"
+        :key="date + 'f'"
+        :id="date"
+        class="flex-shrink-0 min-h-full h-full"
+        style="width: max(13.85%, 170px);"
+      >
+        <div class="flex flex-col min-h-full">
+          
+          <div class="h-12 border-r sticky top-0 flex justify-center items-center px-2 bg-white border-b font-bold text-base">
+            {{getDate(date)}}
+          </div>
+
+          <div
+            v-for="i in getHourArray"
+            :key="i"
+            class="min-h-14 flex-grow flex">
+            <div
+            v-if="!isOffHour(i)"
+            :class="[isPastHour(date, i)]"
+            class="flex-grow border-b border-r p-2 hover:bg-green-100 hover:shadow-inner font-bold text-gray-600 text-sm cursor-pointer">
+            <div class="w-32 h-5 rounded bg-gray-300 shadow-inner">
+              <div class="w-6 h-5 rounded bg-blue-400 text-xs text-white font-bold tracking-widest flex justify-center items-center">4/4</div>
+            </div>
+            
+          </div>
+          </div>
+        </div>
+      </div>
+     
+
      <!-- bar sticky vertical gauche -->
-      <div class="sticky left-0 flex flex-col z-10 shadow-md">
-        <div class="sticky top-0 bg-white w-12 h-12  flex-shrink-0"/> 
+      <!-- <div class="sticky inline left-0 z-10 shadow-md">
+        <div class="sticky top-0 bg-white w-12 h-12"/> 
         <div
           v-for="i in getHourArray"
           :key="i"
@@ -13,22 +58,22 @@
           {{i}}h
         </div>
       </div>
-     <!-- collumn date et cellule -->
+     
       <div
         v-for="(date, i) in rref"
         :key="date + 'f'"
         :id="date"
-        class="flex flex-col"
-        style="flex: 0 0 max(13.85%, 170px);"
+        class="inline"
+        style="max-width: max(13.85%, 170px);"
         
       >
-        <!-- bar sticky haut -->
+        
         <div
           class="sticky top-0 h-12 flex-shrink-0 flex justify-center items-center px-2 bg-white border-b font-bold text-base"
         >
           {{getDate(date)}}
         </div>
-        <!-- cellule -->
+        
         <div
           v-for="i in getHourArray"
           :key="i"
@@ -44,8 +89,8 @@
             
           </div>
           
-        </div>
-      </div>
+        </div> 
+      </div> -->
     </div>
   </div>
 </template>
@@ -120,8 +165,11 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .shasha {
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
+.overflow-auto::-webkit-scrollbar {
+  display: none;
+} 
 </style>
