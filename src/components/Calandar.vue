@@ -3,70 +3,17 @@
     
     <div id="tt" class="min-h-full min-w-full bg-gray-200 overflow-auto flex">
 
-      <div class="w-12 min-h-full h-full sticky flex-shrink-0 left-0 shadow-md z-20">
-        <div class="flex flex-col min-h-full">
-        <div class="w-full h-12 bg-blue-400 border-b sticky top-0"></div>
-        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
-        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
-        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
-        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
-        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
-        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
-        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
-        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
-        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
-        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
-        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
-        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
-        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
-        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
-        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
-        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
-        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
-        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
-        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
-        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
-        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
-        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
-        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
-        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
-        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
-        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
-        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
-        <div class="w-full min-h-14 flex-grow border-b bg-white"></div>
+      <div class="w-12 min-h-full h-full sticky flex-shrink-0 left-0 z-20">
+        <div class="flex flex-col min-h-full shadow-md">
+          <div class="h-12 bg-gray-500 flex-grow sticky top-0"></div>
+          <div v-for="i in 10" :key="i" class="min-h-14 flex-grow bg-white flex items-center justify-center">{{i}}</div>
+
         </div>
       </div>
-      <div v-for="i in 20" :key="i" class="w-32 flex-shrink-0 min-h-full h-full">
+      <div v-for="i in 20" :key="i" class="flex-shrink-0 min-h-full h-full" style="width: max(13.85%, 170px);">
         <div class="flex flex-col min-h-full">
-        <div class="w-full h-12 bg-red-400 border-b border-r sticky top-0"></div>
-        <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
-        <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
-        <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
-        <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
-        <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
-        <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
-        <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
-        <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
-        <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
-        <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
-        <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
-        <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
-        <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
-        <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
-         <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
-        <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
-        <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
-        <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
-        <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
-        <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
-        <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
-        <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
-        <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
-        <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
-        <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
-        <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
-        <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
-        <div class="w-full min-h-14 flex-grow border-b border-r bg-white"></div>
+          <div class="h-12 bg-red-400 border-b border-r sticky top-0 flex justify-center items-center">sticky</div>
+          <div v-for="i in 10" :key="i" class=" min-h-14 flex-grow border-b border-r bg-white">{{i}}</div>
         </div>
       </div>
      
