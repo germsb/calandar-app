@@ -5,7 +5,7 @@
 
       <div class="w-12 min-h-full h-full sticky flex-shrink-0 left-0 z-20">
         <div class="flex flex-col min-h-full shadow-md">
-          <div class="h-12 bg-gray-500 flex-grow sticky top-0"></div>
+          <div class="h-12 bg-white sticky top-0"></div>
           <div v-for="i in 10" :key="i" class="min-h-14 flex-grow bg-white flex items-center justify-center">{{i}}</div>
 
         </div>
@@ -136,8 +136,11 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .shasha {
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
+.overflow-auto::-webkit-scrollbar {
+  display: none;
+} 
 </style>
