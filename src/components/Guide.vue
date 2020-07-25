@@ -19,8 +19,9 @@
     </div>
     <div class="mt-3 flex flex-col">
       <div
-        v-for="(guide) in guides"
+        v-for="(guide, i) in guides"
         :key="guide + 'f'"
+        @click="changeGuide(i)"
         :class="'p-1 mb-2 bg-white rounded-full flex cursor-pointer items-center '+(guide.select ? 'w-48' : 'w-40 hover:w-48')"
       >
         <img :src="'https://i.pravatar.cc/50?u='+guide.name" class="mr-3 inline rounded-full w-8" />
@@ -32,33 +33,44 @@
 </template>
 
 <script>
+import { ref } from "vue";
+
 export default {
-  props: {
-    guides: {
-      type: Array,
-      default: [
-        {
-          name: "Germain",
-          select: false
-        },
-        {
-          name: "Nicolas",
-          select: false
-        },
-        {
-          name: "Mélina",
-          select: true
-        },
-        {
-          name: "Lydie",
-          select: false
-        },
-        {
-          name: "Julie",
-          select: false
+  setup() {
+    const guides = ref([
+      {
+        name: "Germain",
+        select: false
+      },
+      {
+        name: "Nicolas",
+        select: false
+      },
+      {
+        name: "Mélina",
+        select: true
+      },
+      {
+        name: "Lydie",
+        select: false
+      },
+      {
+        name: "Julie",
+        select: false
+      }
+    ]);
+
+    function changeGuide(index) {
+      guides.value = guides.value.map((el, i) => {
+        if (i == index) {
+          el.select = true;
+        } else {
+          el.select = false;
         }
-      ]
+        return el;
+      });
     }
+    return { changeGuide, guides };
   }
 };
 </script>
