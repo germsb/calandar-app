@@ -1,31 +1,40 @@
 .btn {
-    @apply rounded capitalize px-4 py-1 text-lg font-bold;
+  @apply rounded capitalize px-4 py-1 text-lg font-bold;
 }
 
 .btn:focus {
-    @apply outline-none;
+  @apply outline-none;
 }
 
 .btn-blue {
-    @apply bg-blue-400 text-white;
+  @apply bg-blue-400 text-white;
 }
 
 .btn-blue:hover {
-    @apply bg-blue-600 ;
-    
+  @apply bg-blue-600;
+}
+.btn-nmr {
 }
 .btn-gray {
-    @apply bg-gray-100 text-gray-700;
+  @apply bg-gray-100 text-gray-700;
+  background: white;
+  box-shadow: 4px 4px 9px #dae0e6, -4px -4px 9px #ffffff;
+  min-height: 35px;
 }
 
 .btn-gray:hover {
-    @apply bg-gray-600 text-gray-100 ;
-    
+  background: linear-gradient(145deg, #d5dbe17e, #feffff);
+  box-shadow: 4px 4px 9px #dae0e6, -4px -4px 9px #ffffff;
+}
+
+.btn-gray:active {
+  background: #edf3fa;
+  box-shadow: inset 4px 4px 9px #dae0e6, inset -4px -4px 9px #ffffff;
 }
 
 .btn-primary {
-    @apply bg-primary text-white;
+  @apply bg-primary text-white;
 }
 .btn-primary:hover {
-    filter: invert(70%);
+  filter: invert(70%);
 }
