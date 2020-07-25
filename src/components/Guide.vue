@@ -23,6 +23,7 @@
         :key="guide + 'f'"
         @click="changeGuide(i)"
         :class="'p-1 mb-2 bg-white rounded-full flex cursor-pointer items-center '+(guide.select ? 'w-48' : 'w-40 hover:w-48')"
+        style="transition: all .2s;"
       >
         <img :src="'https://i.pravatar.cc/50?u='+guide.name" class="mr-3 inline rounded-full w-8" />
         <div class="flex-1">{{ guide.name }}</div>
