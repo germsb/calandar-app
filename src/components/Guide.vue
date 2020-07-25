@@ -21,8 +21,7 @@
       <div
         v-for="(guide) in guides"
         :key="guide + 'f'"
-        class="p-1 mb-2 bg-white rounded-full flex items-center"
-        style="width:170px;"
+        :class="'p-1 mb-2 bg-white rounded-full flex cursor-pointer items-center '+(guide.select ? 'w-48' : 'w-40 hover:w-48')"
       >
         <img :src="'https://i.pravatar.cc/50?u='+guide.name" class="mr-3 inline rounded-full w-8" />
         <div class="flex-1">{{ guide.name }}</div>
@@ -40,7 +39,7 @@ export default {
       default: [
         {
           name: "Germain",
-          select: true
+          select: false
         },
         {
           name: "Nicolas",
@@ -48,7 +47,7 @@ export default {
         },
         {
           name: "Mélina",
-          select: false
+          select: true
         },
         {
           name: "Lydie",
