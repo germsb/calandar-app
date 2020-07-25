@@ -16,20 +16,17 @@
 .btn-nmr {
 }
 .btn-gray {
-  @apply bg-gray-100 text-gray-700;
-  background: white;
-  box-shadow: 4px 4px 9px #dae0e6, -4px -4px 9px #ffffff;
+  @apply text-gray-700 bg-white shadow-neuro-btn;
   min-height: 35px;
 }
 
 .btn-gray:hover {
+  @apply shadow-neuro-btn
   background: linear-gradient(145deg, #d5dbe17e, #feffff);
-  box-shadow: 4px 4px 9px #dae0e6, -4px -4px 9px #ffffff;
 }
 
 .btn-gray:active {
-  background: #edf3fa;
-  box-shadow: inset 4px 4px 9px #dae0e6, inset -4px -4px 9px #ffffff;
+  @apply bg-gray-100 shadow-neuro-btn-active;
 }
 
 .btn-primary {

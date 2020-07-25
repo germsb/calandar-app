@@ -1,0 +1,12 @@
+
+.icon {
+    @apply inline-block align-middle
+}
+
+.icon-md {
+    @apply w-5 h-5
+}
+
+.icon-lg {
+    @apply w-6 h-6
+}

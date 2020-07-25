@@ -19,6 +19,7 @@
  * @import 'components/buttons';
  */
 @import "./assets/styles/components/button.css";
+@import "./assets/styles/components/icon.css";
 /**
  * This injects all of Tailwind's utility classes, generated based on your
  * config file.

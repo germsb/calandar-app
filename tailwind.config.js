@@ -9,7 +9,13 @@ module.exports = {
         "14": "3.5rem",
       },
       boxShadow: {
-        down: "inset 0 1px 5px 0 rgba(0, 0, 0, 0.3)",
+        neuro1: "7px 7px 14px #dae0e6, -7px -7px 14px #ffffff",
+        neuro2: "inset 5px 5px 10px #dae0e6, inset -5px -5px 10px #ffffff",
+        "neuro-btn": "4px 4px 9px #dae0e6, -4px -4px 9px #ffffff",
+        "neuro-btn-active": "inset 4px 4px 9px #dae0e6, inset -4px -4px 9px #ffffff"
+      },
+      borderRadius: {
+        "xxl": "1.25rem"
       },
       colors: {
         gray: {
