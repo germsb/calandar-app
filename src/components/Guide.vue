@@ -22,8 +22,8 @@
         v-for="(guide, i) in guides"
         :key="guide + 'f'"
         @click="changeGuide(i)"
-        :class="'p-1 mb-2 bg-white rounded-full flex cursor-pointer items-center '+(guide.select ? 'w-48' : 'w-40 hover:w-48')"
-        style="transition: all .2s;"
+        :class="'p-1 mb-2 bg-white rounded-full flex cursor-pointer items-center transition-all duration-200 '+(guide.select ? 'w-48' : 'w-40 hover:w-48')"
+       
       >
         <img :src="'https://i.pravatar.cc/50?u='+guide.name" class="mr-3 inline rounded-full w-8" />
         <div class="flex-1">{{ guide.name }}</div>
