@@ -16,7 +16,7 @@
         :key="date + 'f'"
         :id="date"
         class="flex-shrink-0 min-h-full h-full"
-        style="width: max(13.85%, 170px);"
+        style="width: max(13.5%, 120px);"
       >
         <div class="flex flex-col min-h-full">
           <div
@@ -29,7 +29,7 @@
               :class="[isPastHour(date, i)]"
               class="flex-grow p-4 font-bold text-gray-600 text-sm cursor-pointer"
             >
-              <div class="w-32 h-5 rounded bg-gray-300 shadow-inner">
+              <div class="w-full h-5 rounded bg-gray-300 shadow-inner">
                 <div
                   class="w-6 h-5 rounded bg-primary text-xs text-white font-bold tracking-widest flex justify-center items-center"
                 >4/4</div>
@@ -83,7 +83,7 @@ export default {
         selectedDate,
         -Math.abs(getISODay(selectedDate) + 6)
       );
-      for (let i = 0; i < 21; i++) {
+      for (let i = 0; i < 7; i++) {
         // console.log(i);
         const date2 = addDays(selectedDate, i);
         rref.value.push(date2);
