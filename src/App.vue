@@ -14,6 +14,9 @@
         <button class="btn btn-gray rounded-none" @click="changeColor('237, 137, 54')">
           <div class="rounded-full w-5 h-5 bg-orange-500"></div>
         </button>
+        <button class="btn btn-gray" @click="changeColor('56, 178, 172')">
+          <div class="rounded-full w-5 h-5 bg-teal-500"></div>
+        </button>
         <button class="btn btn-gray rounded-r-full" @click="changeColor('160, 123, 234')">
           <div class="rounded-full w-5 h-5 bg-purple-500"></div>
         </button>

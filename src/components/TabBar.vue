@@ -4,7 +4,7 @@
   >
     <div
       v-for="(title, i) in titles"
-      :class="'flex items-center hover:font-bold justify-center h-10 cursor-pointer capitalize '+(select == i ? 'tabon' : 'taboff')+' '+(i == 0 ? 'rounded-l-full' : '')+' '+(i == titles.length-1 ? 'rounded-r-full' : '')"
+      :class="'flex items-center hover:font-bold transition-all duration-200 justify-center h-10 cursor-pointer capitalize '+(select == i ? 'tabon' : 'taboff')+' '+(i == 0 ? 'rounded-l-full' : '')+' '+(i == titles.length-1 ? 'rounded-r-full' : '')"
       :key="i"
       @click="change(i)"
     >{{ title }}</div>
