@@ -18,8 +18,9 @@ export default {
   name: "v-tabBar",
   props: {
     titles: {
-      type: [String],
-      required: true
+      type: Array,
+      required: true,
+      default: [""]
     },
     inset: {
       type: Boolean,

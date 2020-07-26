@@ -1,6 +1,6 @@
 <template>
   <div class="flex-grow flex overflow-hidden">
-    <div id="tt" class="min-h-full min-w-full overflow-auto flex">
+    <div id="calandarElem" class="min-h-full min-w-full  overflow-y-auto overflow-x-hidden  flex">
       <div class="w-12 min-h-full h-full sticky flex-shrink-0 left-0 z-20">
         <div class="flex flex-col min-h-full border-r">
           <div class="h-12 bg-gray-100 sticky top-0"></div>
@@ -11,21 +11,23 @@
           >{{i}}h</div>
         </div>
       </div>
-      <div
+      <div id="date-container" class="flex flex-grow">
+        <div
         v-for="(date, i) in rref"
         :key="date + 'f'"
         :id="date"
         class="flex-shrink-0 min-h-full h-full"
-        style="width: max(13.5%, 120px);"
+        style="width: max(calc(100% / 7), 120px);"
       >
         <div class="flex flex-col min-h-full">
           <div
             class="h-12 sticky top-0 flex justify-center border-b items-center px-2 bg-gray-100 font-bold text-base"
           >{{getDate(date)}}</div>
-
-          <div v-for="i in getHourArray" :key="i" class="min-h-14 flex-grow flex">
+          <div class="flex flex-col flex-grow border-r">
+             <div v-for="i in getHourArray" :key="i" class="min-h-14 flex-grow flex">
             <div
               v-if="!isOffHour(i)"
+              
               :class="[isPastHour(date, i)]"
               class="flex-grow p-4 font-bold text-gray-600 text-sm cursor-pointer"
             >
@@ -36,8 +38,12 @@
               </div>
             </div>
           </div>
+          </div>
+         
         </div>
       </div>
+      </div>
+      
     </div>
   </div>
 </template>
@@ -49,6 +55,7 @@ import {
   format,
   getISODay,
   isThisHour,
+  isSameDay,
   isPast,
   isToday,
   setHours,
@@ -56,18 +63,20 @@ import {
   setDay
 } from "date-fns";
 import { fr } from "date-fns/locale";
-import { computed, watchEffect, ref, onMounted } from "vue";
+import { computed, watchEffect,watch, ref, onMounted, toRefs } from "vue";
 export default {
   props: {
-    timeSlotsStart: { type: Number, default: 9 },
+    timeSlotsStart: { type: Number, default: 9 }, 
     timeSlotsEnd: { type: Number, default: 18 },
     offHour: { type: Array, default: [13] },
-    selectedDate: { type: Number, default: Date.now() }
+    selectedDate: { type: Number, default: Date.now() },
+    moveByDay: { type: Number, default:0 },
+    moveByWeek: { type: Number, default: 0 },
   },
-  setup({ timeSlotsStart, timeSlotsEnd, offHour, selectedDate }) {
+  setup(props) {
     const getHourArray = computed(() => {
       const h = [];
-      for (let i = timeSlotsStart; i <= timeSlotsEnd; i++) {
+      for (let i = props.timeSlotsStart; i <= props.timeSlotsEnd; i++) {
         h.push(i);
       }
       return h;
@@ -75,27 +84,61 @@ export default {
 
     const rref = ref([]);
     let elemId = "";
-    watchEffect(() => {
-      elemId = setDay(selectedDate, 1, { weekStartsOn: 1 }).toString();
-      // console.log(elemId);
-      // console.log(getISODay(selectedDate));
-      const date = addDays(
-        selectedDate,
-        -Math.abs(getISODay(selectedDate) + 6)
-      );
-      for (let i = 0; i < 7; i++) {
-        // console.log(i);
-        const date2 = addDays(selectedDate, i);
-        rref.value.push(date2);
-        // console.log(format(date2, "cccc dd LLL", { locale: fr }));
-      }
+
+    watch(() => props.moveByDay, (newVal, oldVal) => {
+      elemId = newVal > oldVal ? addDays(elemId, 1) : subDays(elemId, 1);
+       document.getElementById(elemId).scrollIntoView({behavior: "smooth", block: "end", inline: "end"});
     });
 
+    watch(() => props.moveByWeek, (newVal, oldVal) => {
+      console
+      elemId = newVal > oldVal ? 
+        (() => {
+          const id = setDay(elemId,0,{weekStartsOn: 1})
+          console.log(elemId,"----", id);
+          if(isSameDay(elemId, id))
+            return addDays(elemId, 7);
+          return id
+        })() 
+        :
+        (() => {
+          const id = setDay(elemId,0,{weekStartsOn: 0})
+          console.log(elemId,"----", id);
+          if(isSameDay(elemId, id))
+            return subDays(elemId, 7);
+          return id
+        })()
+      document.getElementById(elemId).scrollIntoView({behavior: "smooth", block: "end", inline: "end"});
+    });
+
+
+    watch(() => props.selectedDate, (newDate, oldDate) => {
+
+      elemId = addDays(props.selectedDate, 5);
+      //elemId = setDay(selectedDate,1,{weekStartsOn: 1}).toString() 
+      //console.log(elemId);
+      //console.log(getISODay(props.selectedDate))
+      const date = addDays(props.selectedDate, -Math.abs(getISODay(props.selectedDate) + 6 ));
+      for (let i = 0; i < 21; i++) {
+        console.log(i);
+        const date2 = addDays(date, i);
+        rref.value.push(date2);
+        console.log(format(date2, "cccc dd LLL", { locale: fr }));
+      }
+    },{immediate: true});
+    
+
     onMounted(() => {
-      // document
-      //   .getElementById(elemId)
-      //   .scrollIntoView({ behavior: "auto", block: "start", inline: "start" });
-      // document.getElementById("tt").scrollBy({ left: -48 });
+      document.getElementById("date-container").style.marginLeft = "0px"
+      document.getElementById(elemId).scrollIntoView({behavior: "smooth", block: "end", inline: "end"});
+      const ro = new ResizeObserver(entries => {
+        document.getElementById(elemId).scrollIntoView({behavior: "auto", block: "end", inline: "end"}); 
+      });
+      ro.observe(document.getElementById("calandarElem"));
+    })
+     const test = computed(() => {
+      console.log(props.moveByDay);
+      return props.moveByDay;
     });
 
     const calandarData = computed(() => {
@@ -110,15 +153,15 @@ export default {
           ? "bg-gray-100 border border-gray-100"
           : localHour === hour
           ? "bg-white border border-primary rounded"
-          : "bg-white border border-dashed border-dashed border-white hover:border-primary";
+          : "bg-white border border-dashed border-white hover:border-primary";
       } else {
         return isPast(date)
-          ? "bg-gray-100 border border-gray-200"
+          ? "bg-gray-100"
           : "bg-white border border-dashed border-white hover:border-primary";
       }
     }
     function isOffHour(hour) {
-      return offHour.some(v => v === hour);
+      return props.offHour.some(v => v === hour);
     }
 
     function getDate(index) {
@@ -128,7 +171,7 @@ export default {
     function cc(id, id2) {
       console.log(id, id2);
     }
-    return { getDate, cc, getHourArray, isOffHour, rref, isPastHour };
+    return { getDate, cc, getHourArray, isOffHour, rref, isPastHour, test};
   }
 };
 </script>
