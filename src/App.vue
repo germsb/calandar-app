@@ -22,7 +22,7 @@
         </button>
       </div>
     </div>
-    <div class="flex justify-start items-center">
+    <div class="flex justify-start items-center pl-5 pr-5">
       <v-tabBar :titles="['titre 1','titre 2','titre 3','titre 4']" />
       <v-tabBar :titles="['titre 1','titre 2','titre 3','titre 4']" inset />
     </div>
