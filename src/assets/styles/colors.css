@@ -1,4 +1,6 @@
 :root {
-  --color-primary: #9f79ea;
+  --primary-alpha: 1;
+  --primary-color: 160, 123, 234;
+  --color-primary: rgba(var(--primary-color), var(--primary-alpha));
   --color-secondary: #ecc94b;
 }

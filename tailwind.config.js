@@ -9,13 +9,14 @@ module.exports = {
         "14": "3.5rem",
       },
       boxShadow: {
-        neuro1: "7px 7px 14px #dae0e6, -7px -7px 14px #ffffff",
-        neuro2: "inset 5px 5px 10px #dae0e6, inset -5px -5px 10px #ffffff",
-        "neuro-btn": "4px 4px 9px #dae0e6, -4px -4px 9px #ffffff",
-        "neuro-btn-active": "inset 4px 4px 9px #dae0e6, inset -4px -4px 9px #ffffff"
+        neuro1: "7px 7px 14px #dae0e6, -7px -7px 10px #ffffff",
+        neuro2: "inset 5px 5px 10px #dae0e6, inset -5px -5px 7px #ffffff",
+        "neuro-btn": "4px 4px 9px #dae0e6, -4px -4px 7px #ffffff",
+        "neuro-btn-active":
+          "inset 4px 4px 9px #dae0e6, inset -4px -4px 7px #ffffff",
       },
       borderRadius: {
-        "xxl": "1.25rem"
+        xxl: "1.25rem",
       },
       colors: {
         gray: {
@@ -29,7 +30,7 @@ module.exports = {
           "800": "#424242",
           "900": "#212121",
         },
-        primary: "var(--color-primary)",
+        primary: "rgba(var(--primary-color), var(--primary-alpha))",
         secondary: "var(--color-secondary)",
       },
     },

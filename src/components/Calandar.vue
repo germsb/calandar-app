@@ -77,17 +77,17 @@ export default {
     let elemId = "";
     watchEffect(() => {
       elemId = setDay(selectedDate, 1, { weekStartsOn: 1 }).toString();
-      console.log(elemId);
-      console.log(getISODay(selectedDate));
+      // console.log(elemId);
+      // console.log(getISODay(selectedDate));
       const date = addDays(
         selectedDate,
         -Math.abs(getISODay(selectedDate) + 6)
       );
       for (let i = 0; i < 21; i++) {
-        console.log(i);
+        // console.log(i);
         const date2 = addDays(selectedDate, i);
         rref.value.push(date2);
-        console.log(format(date2, "cccc dd LLL", { locale: fr }));
+        // console.log(format(date2, "cccc dd LLL", { locale: fr }));
       }
     });
 
@@ -99,7 +99,8 @@ export default {
     });
 
     const calandarData = computed(() => {
-      console.log(getISODay(selectedDate));
+      //console.log(getISODay(selectedDate));
+      return;
     });
 
     function isPastHour(date, hour) {

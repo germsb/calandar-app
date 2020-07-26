@@ -21,7 +21,6 @@
 }
 
 .btn-gray:hover {
-  @apply shadow-neuro-btn
   background: linear-gradient(145deg, #d5dbe17e, #feffff);
 }
 
