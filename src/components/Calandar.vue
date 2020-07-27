@@ -22,7 +22,7 @@
         <div class="flex flex-col min-h-full">
           <div
             class="h-12 sticky top-0 flex justify-center border-b items-center px-2 bg-gray-100 font-bold text-base"
-          >{{getDate(date)}}</div>
+          >{{formatDate(date)}}</div>
           <div class="flex flex-col flex-grow border-r">
              <div v-for="i in getHourArray" :key="i" class="min-h-14 flex-grow flex">
             <div
@@ -79,13 +79,25 @@ export default {
     let elemId = "";
     let canScroll = true;
 
-    const getHourArray = computed(() => {
-      const h = [];
-      for (let i = props.timeSlotsStart; i <= props.timeSlotsEnd; i++) {
-        h.push(i);
+    watch(() => props.selectedDate, (newDate, oldDate) => {
+
+      elemId = addDays(props.selectedDate, 5);
+      const date = addDays(props.selectedDate, -Math.abs(getISODay(props.selectedDate) + 6 ));
+      for (let i = 0; i < 21; i++) {
+        const date2 = addDays(date, i);
+        dateArray.value.push(date2);
       }
-      return h;
-    });
+    },{immediate: true});
+    
+    
+    onMounted(() => {
+      document.getElementById(elemId).scrollIntoView({behavior: "auto", block: "end", inline: "end"});
+      const ro = new ResizeObserver(entries => {
+        document.getElementById(elemId).scrollIntoView({behavior: "auto", block: "end", inline: "end"}); 
+      });
+      ro.observe(document.getElementById("calandarElem"));
+    })
+
 
     watch(() => props.moveByDay, async (newVal, oldVal) => {
       if(canScroll) {
@@ -124,7 +136,6 @@ export default {
       elemId = isSameDay(elemId, res) ? addDays(elemId, 7) : res
       document.getElementById(elemId).scrollIntoView({behavior: "smooth", block: "end", inline: "end"});
       await new Promise(resolve => setTimeout(resolve, 600));
-      console.log("bbbbzzzzzz")
       await addNextWeek();
      
       return true;
@@ -135,7 +146,6 @@ export default {
       elemId = isSameDay(elemId, res) ? subDays(elemId, 7) : res;
       document.getElementById(elemId).scrollIntoView({behavior: "smooth", block: "end", inline: "end"});
       await new Promise(resolve => setTimeout(resolve, 700));
-      console.log("bbbbzzzzzz")
       await addPrevWeek();
       return true;
     }
@@ -168,40 +178,12 @@ export default {
       }
     }
 
-
-    watch(() => props.selectedDate, (newDate, oldDate) => {
-
-      elemId = addDays(props.selectedDate, 5);
-      //elemId = setDay(selectedDate,1,{weekStartsOn: 1}).toString() 
-      //console.log(elemId);
-      //console.log(getISODay(props.selectedDate))
-      const date = addDays(props.selectedDate, -Math.abs(getISODay(props.selectedDate) + 6 ));
-      for (let i = 0; i < 21; i++) {
-        console.log(i);
-        const date2 = addDays(date, i);
-        dateArray.value.push(date2);
-        console.log(format(date2, "cccc dd LLL", { locale: fr }));
+    const getHourArray = computed(() => {
+      const h = [];
+      for (let i = props.timeSlotsStart; i <= props.timeSlotsEnd; i++) {
+        h.push(i);
       }
-    },{immediate: true});
-    
-    
-    onMounted(() => {
-      
-      document.getElementById(elemId).scrollIntoView({behavior: "auto", block: "end", inline: "end"});
-      
-      const ro = new ResizeObserver(entries => {
-        document.getElementById(elemId).scrollIntoView({behavior: "auto", block: "end", inline: "end"}); 
-      });
-      ro.observe(document.getElementById("calandarElem"));
-    })
-     const test = computed(() => {
-      console.log(props.moveByDay);
-      return props.moveByDay;
-    });
-
-    const calandarData = computed(() => {
-      //console.log(getISODay(selectedDate));
-      return;
+      return h;
     });
 
     function isPastHour(date, hour) {
@@ -222,14 +204,11 @@ export default {
       return props.offHour.some(v => v === hour);
     }
 
-    function getDate(index) {
-      //const date = addDays(Date.now(), index);
+    function formatDate(index) {
       return format(index, "ccc dd LLL", { locale: fr });
     }
-    function cc(id, id2) {
-      console.log(id, id2);
-    }
-    return { getDate, cc, getHourArray, isOffHour, dateArray, isPastHour, test, marginLeft, marginRight};
+    
+    return { formatDate, getHourArray, isOffHour, dateArray, isPastHour};
   }
 };
 </script>
