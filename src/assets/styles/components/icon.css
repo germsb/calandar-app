@@ -10,3 +10,6 @@
 .icon-lg {
     @apply w-6 h-6
 }
+.icon-xl {
+    @apply w-8 h-8
+}

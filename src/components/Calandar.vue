@@ -74,7 +74,8 @@ export default {
     moveByDay: { type: Number, default:0 },
     moveByWeek: { type: Number, default: 0 },
   },
-  setup(props) {
+  setup(props, { emit }) {
+
     const dateArray = ref([]);
     let elemId = "";
     let canScroll = true;
@@ -96,8 +97,7 @@ export default {
         await nextTick();
         document.getElementById(elemId).scrollIntoView({behavior: "auto", block: "end", inline: "end"});
       }
-     
-      
+      emitCurrentDatesView();
     },{immediate: true});
     
     
@@ -114,6 +114,7 @@ export default {
       if(canScroll) {
         canScroll = false;
         canScroll = newVal > oldVal ? await dayNext() : await dayPrev();
+        emitCurrentDatesView();
       }
     });
 
@@ -123,7 +124,7 @@ export default {
       await new Promise(resolve => setTimeout(resolve, 300));
       await addNextWeek();
       return true;
-    }
+    };
 
     async function dayPrev() {
       elemId = subDays(elemId, 1)
@@ -131,7 +132,7 @@ export default {
       await new Promise(resolve => setTimeout(resolve, 300));
       await addPrevWeek();
       return true;
-    }
+    };
 
 
 
@@ -139,6 +140,7 @@ export default {
       if(canScroll) {
         canScroll = false;
         canScroll = newVal > oldVal ? await weekNext() : await weekPrev();
+        emitCurrentDatesView();
       }
     });
 
@@ -148,9 +150,8 @@ export default {
       document.getElementById(elemId).scrollIntoView({behavior: "smooth", block: "end", inline: "end"});
       await new Promise(resolve => setTimeout(resolve, 600));
       await addNextWeek();
-     
       return true;
-    }
+    };
 
     async function weekPrev() {
       const res = setDay(elemId,0,{weekStartsOn: 0});
@@ -159,7 +160,7 @@ export default {
       await new Promise(resolve => setTimeout(resolve, 700));
       await addPrevWeek();
       return true;
-    }
+    };
 
 
     async function addNextWeek() {
@@ -173,7 +174,7 @@ export default {
         await nextTick();
         document.getElementById(elemId).scrollIntoView({behavior: "auto", block: "end", inline: "end"});
       }
-    }
+    };
 
     async function addPrevWeek() {
       const firstDay = dateArray.value[0]
@@ -187,7 +188,12 @@ export default {
         await nextTick();
         document.getElementById(elemId).scrollIntoView({behavior: "auto", block: "end", inline: "end"});
       }
-    }
+    };
+
+    function emitCurrentDatesView() {
+      const calandarStartDay = subDays(elemId, 6);
+      emit("current-dates-view", { start: calandarStartDay, end: elemId } )
+    };
 
     const getHourArray = computed(() => {
       const h = [];
@@ -201,13 +207,13 @@ export default {
       if (isToday(date)) {
         const localHour = getHours(Date.now());
         return localHour > hour
-          ? "bg-gray-100 border border-gray-100"
+          ? "bg-gray-100 border border-dashed border-gray-100 hover:border-gray-400"
           : localHour === hour
           ? "bg-white border border-primary rounded"
           : "bg-white border border-dashed border-white hover:border-primary";
       } else {
         return isPast(date)
-          ? "bg-gray-100"
+          ? "bg-gray-100 border border-dashed border-gray-100 hover:border-gray-400"
           : "bg-white border border-dashed border-white hover:border-primary";
       }
     }
@@ -225,10 +231,6 @@ export default {
 </script>
 
 <style scoped>
-.shasha {
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -1px rgba(0, 0, 0, 0.06);
-}
 .overflow-auto::-webkit-scrollbar {
   overflow: hidden;
 }
