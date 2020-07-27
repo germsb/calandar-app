@@ -13,8 +13,8 @@
 .btn-blue:hover {
   @apply bg-blue-600;
 }
-.btn-nmr {
-}
+
+
 .btn-gray {
   @apply text-gray-700 bg-white shadow-neuro-btn;
   min-height: 35px;
@@ -27,6 +27,9 @@
 .btn-gray:active {
   @apply bg-gray-100 shadow-neuro-btn-active;
 }
+
+
+
 
 .btn-primary {
   @apply bg-primary text-white;

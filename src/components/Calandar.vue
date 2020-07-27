@@ -79,14 +79,25 @@ export default {
     let elemId = "";
     let canScroll = true;
 
-    watch(() => props.selectedDate, (newDate, oldDate) => {
+    watch(() => props.selectedDate, async (newDate, oldDate) => {
+      let refreshView = false;
+      if(dateArray.value.length) {
+        refreshView = true;
+        dateArray.value.length = 0;
 
+      }
       elemId = addDays(props.selectedDate, 5);
       const date = addDays(props.selectedDate, -Math.abs(getISODay(props.selectedDate) + 6 ));
       for (let i = 0; i < 21; i++) {
         const date2 = addDays(date, i);
         dateArray.value.push(date2);
       }
+      if(refreshView) {
+        await nextTick();
+        document.getElementById(elemId).scrollIntoView({behavior: "auto", block: "end", inline: "end"});
+      }
+     
+      
     },{immediate: true});
     
     

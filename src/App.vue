@@ -22,6 +22,22 @@
         </button>
         <button class="btn btn-gray rounded-l-full ml-3" @click="week--">prev week</button>
         <button class="btn btn-gray rounded-none " @click="day--">prev day</button>
+         <button class="btn btn-gray rounded-none text-gray-800" @click="selectedDate = Date.now()">
+           <c-icon
+            viewBox="0 0 24 24"
+            data-icon="test"
+            path="M7 10h5v5H7m12 4H5V8h14m0-5h-1V1h-2v2H8V1H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2z"
+            class="icon icon-lg mx-1"
+          />
+         </button>
+         <button class="btn btn-gray rounded-none text-gray-800">
+           <c-icon
+            viewBox="0 0 24 24"
+            data-icon="test"
+            path="M9 10v2H7v-2h2m4 0v2h-2v-2h2m4 0v2h-2v-2h2m2-7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h1V1h2v2h8V1h2v2h1m0 16V8H5v11h14M9 14v2H7v-2h2m4 0v2h-2v-2h2m4 0v2h-2v-2h2z"
+            class="icon icon-lg mx-1"
+          />
+         </button>
         <button class="btn btn-gray rounded-none" @click="day++">next day</button>
          <button class="btn btn-gray rounded-r-full" @click="week++">next week</button>
       </div>
@@ -35,7 +51,7 @@
       <!-- <guide /> -->
       <v-guide />
       <!-- <agenda /> -->
-      <v-calandar :moveByDay="day" :moveByWeek="week"/>
+      <v-calandar :moveByDay="day" :moveByWeek="week" :selectedDate="selectedDate"/>
     </div>
 
     <!-- footer -->
@@ -62,12 +78,13 @@ export default {
   },
   data: ()=>({day: 0}),
   setup() {
+    const selectedDate = ref(Date.now());
     const day = ref(0);
     const week = ref(0);
     function changeColor(color) {
       document.documentElement.style.setProperty("--primary-color", color);
     }
-    return { changeColor, day, week};
+    return { changeColor, day, week, selectedDate};
   }
 };
 </script>
