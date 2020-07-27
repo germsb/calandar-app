@@ -11,13 +11,13 @@
           >{{i}}h</div>
         </div>
       </div>
-      <div id="date-container" class="flex flex-grow">
+      <div id="date-container" class="flex flex-grow min-w-full overflow-x-hidden" >
         <div
-        v-for="(date, i) in rref"
+        v-for="(date, i) in dateArray"
         :key="date + 'f'"
         :id="date"
         class="flex-shrink-0 min-h-full h-full"
-        style="width: max(calc(100% / 7), 120px);"
+        :style="`width: max(calc((100% - 3rem) / 7), 120px);`"
       >
         <div class="flex flex-col min-h-full">
           <div
@@ -60,10 +60,11 @@ import {
   isToday,
   setHours,
   getHours,
-  setDay
+  setDay,
+  differenceInWeeks
 } from "date-fns";
 import { fr } from "date-fns/locale";
-import { computed, watchEffect,watch, ref, onMounted, toRefs } from "vue";
+import { computed, watchEffect,watch, ref, onMounted, toRefs, nextTick } from "vue";
 export default {
   props: {
     timeSlotsStart: { type: Number, default: 9 }, 
@@ -74,6 +75,10 @@ export default {
     moveByWeek: { type: Number, default: 0 },
   },
   setup(props) {
+    const dateArray = ref([]);
+    let elemId = "";
+    let canScroll = true;
+
     const getHourArray = computed(() => {
       const h = [];
       for (let i = props.timeSlotsStart; i <= props.timeSlotsEnd; i++) {
@@ -82,34 +87,86 @@ export default {
       return h;
     });
 
-    const rref = ref([]);
-    let elemId = "";
-
-    watch(() => props.moveByDay, (newVal, oldVal) => {
-      elemId = newVal > oldVal ? addDays(elemId, 1) : subDays(elemId, 1);
-       document.getElementById(elemId).scrollIntoView({behavior: "smooth", block: "end", inline: "end"});
+    watch(() => props.moveByDay, async (newVal, oldVal) => {
+      if(canScroll) {
+        canScroll = false;
+        canScroll = newVal > oldVal ? await dayNext() : await dayPrev();
+      }
     });
 
-    watch(() => props.moveByWeek, (newVal, oldVal) => {
-      console
-      elemId = newVal > oldVal ? 
-        (() => {
-          const id = setDay(elemId,0,{weekStartsOn: 1})
-          console.log(elemId,"----", id);
-          if(isSameDay(elemId, id))
-            return addDays(elemId, 7);
-          return id
-        })() 
-        :
-        (() => {
-          const id = setDay(elemId,0,{weekStartsOn: 0})
-          console.log(elemId,"----", id);
-          if(isSameDay(elemId, id))
-            return subDays(elemId, 7);
-          return id
-        })()
+    async function dayNext() {
+      elemId = addDays(elemId, 1)
       document.getElementById(elemId).scrollIntoView({behavior: "smooth", block: "end", inline: "end"});
+      await new Promise(resolve => setTimeout(resolve, 300));
+      await addNextWeek();
+      return true;
+    }
+
+    async function dayPrev() {
+      elemId = subDays(elemId, 1)
+      document.getElementById(elemId).scrollIntoView({behavior: "smooth", block: "end", inline: "end"});
+      await new Promise(resolve => setTimeout(resolve, 300));
+      await addPrevWeek();
+      return true;
+    }
+
+
+
+    watch(() => props.moveByWeek, async (newVal, oldVal) => {
+      if(canScroll) {
+        canScroll = false;
+        canScroll = newVal > oldVal ? await weekNext() : await weekPrev();
+      }
     });
+
+    async function weekNext() {
+      const res = setDay(elemId,0,{weekStartsOn: 1});
+      elemId = isSameDay(elemId, res) ? addDays(elemId, 7) : res
+      document.getElementById(elemId).scrollIntoView({behavior: "smooth", block: "end", inline: "end"});
+      await new Promise(resolve => setTimeout(resolve, 600));
+      console.log("bbbbzzzzzz")
+      await addNextWeek();
+     
+      return true;
+    }
+
+    async function weekPrev() {
+      const res = setDay(elemId,0,{weekStartsOn: 0});
+      elemId = isSameDay(elemId, res) ? subDays(elemId, 7) : res;
+      document.getElementById(elemId).scrollIntoView({behavior: "smooth", block: "end", inline: "end"});
+      await new Promise(resolve => setTimeout(resolve, 700));
+      console.log("bbbbzzzzzz")
+      await addPrevWeek();
+      return true;
+    }
+
+
+    async function addNextWeek() {
+      const lastDay = dateArray.value.slice(-1)[0]
+      if(differenceInWeeks(lastDay, elemId) <= 0){
+        for(let i = 1; i <=7; i++) {
+          const newDay = addDays(lastDay, i);
+          dateArray.value.push(newDay);
+          dateArray.value.shift();
+        }
+        await nextTick();
+        document.getElementById(elemId).scrollIntoView({behavior: "auto", block: "end", inline: "end"});
+      }
+    }
+
+    async function addPrevWeek() {
+      const firstDay = dateArray.value[0]
+      const calandarStartDay = subDays(elemId, 6);
+      if(differenceInWeeks(calandarStartDay, firstDay) <= 0){
+        for(let i = 1; i <=7; i++) {
+          const newDay = subDays(firstDay, i);
+          dateArray.value.unshift(newDay);
+          dateArray.value.pop();
+        }
+        await nextTick();
+        document.getElementById(elemId).scrollIntoView({behavior: "auto", block: "end", inline: "end"});
+      }
+    }
 
 
     watch(() => props.selectedDate, (newDate, oldDate) => {
@@ -122,15 +179,16 @@ export default {
       for (let i = 0; i < 21; i++) {
         console.log(i);
         const date2 = addDays(date, i);
-        rref.value.push(date2);
+        dateArray.value.push(date2);
         console.log(format(date2, "cccc dd LLL", { locale: fr }));
       }
     },{immediate: true});
     
-
+    
     onMounted(() => {
-      document.getElementById("date-container").style.marginLeft = "0px"
-      document.getElementById(elemId).scrollIntoView({behavior: "smooth", block: "end", inline: "end"});
+      
+      document.getElementById(elemId).scrollIntoView({behavior: "auto", block: "end", inline: "end"});
+      
       const ro = new ResizeObserver(entries => {
         document.getElementById(elemId).scrollIntoView({behavior: "auto", block: "end", inline: "end"}); 
       });
@@ -171,7 +229,7 @@ export default {
     function cc(id, id2) {
       console.log(id, id2);
     }
-    return { getDate, cc, getHourArray, isOffHour, rref, isPastHour, test};
+    return { getDate, cc, getHourArray, isOffHour, dateArray, isPastHour, test, marginLeft, marginRight};
   }
 };
 </script>
