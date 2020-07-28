@@ -1,6 +1,9 @@
 <template>
   <div class="flex-grow flex overflow-hidden">
-    <div id="calandarElem" class="min-h-full min-w-full  overflow-y-auto overflow-x-hidden  flex">
+    <div
+      id="calandarElem"
+      class="min-h-full min-w-full overflow-y-auto overflow-x-hidden flex"
+    >
       <div class="w-12 min-h-full h-full sticky flex-shrink-0 left-0 z-20">
         <div class="flex flex-col min-h-full border-r">
           <div class="h-12 bg-gray-100 sticky top-0"></div>
@@ -8,42 +11,55 @@
             v-for="i in getHourArray"
             :key="i"
             class="min-h-14 flex-grow bg-gray-100 flex items-center justify-center font-bold text-sm"
-          >{{i}}h</div>
+          >
+            {{ i }}h
+          </div>
         </div>
       </div>
-      <div id="date-container" class="flex flex-grow min-w-full overflow-x-hidden" >
-        <div
-        v-for="(date, i) in dateArray"
-        :key="date + 'f'"
-        :id="date"
-        class="flex-shrink-0 min-h-full h-full"
-        :style="`width: max(calc((100% - 3rem) / 7), 120px);`"
+      <div
+        id="date-container"
+        class="flex flex-grow min-w-full overflow-x-hidden transform"
+        :class="animateWeek"
       >
-        <div class="flex flex-col min-h-full">
-          <div
-            class="h-12 sticky top-0 flex justify-center border-b items-center px-2 bg-gray-100 font-bold text-base"
-          >{{formatDate(date)}}</div>
-          <div class="flex flex-col flex-grow border-r">
-             <div v-for="i in getHourArray" :key="i" class="min-h-14 flex-grow flex">
+        <div
+          v-for="(date, i) in dateArray"
+          :key="date + 'f'"
+          :id="date"
+          class="flex-shrink-0 min-h-full h-full"
+          :style="`width: max(calc((100% - 3rem) / 7), 120px);`"
+        >
+          <div class="flex flex-col min-h-full">
             <div
-              v-if="!isOffHour(i)"
-              
-              :class="[isPastHour(date, i)]"
-              class="flex-grow p-4 font-bold text-gray-600 text-sm cursor-pointer"
+              class="h-12 sticky top-0 flex justify-center border-b items-center px-2 bg-gray-100 font-bold text-base"
             >
-              <div class="w-full h-5 rounded bg-gray-300 shadow-inner">
+              <div v-if="ifSameDay(date, selectedDate)" class="mr-1 rounded-full w-3 h-3 bg-primary "></div>
+              {{ formatDate(date) }}
+              
+            </div>
+            <div class="flex flex-col flex-grow border-r">
+              <div
+                v-for="i in getHourArray"
+                :key="i"
+                class="min-h-14 flex-grow flex"
+              >
                 <div
-                  class="w-6 h-5 rounded bg-primary text-xs text-white font-bold tracking-widest flex justify-center items-center"
-                >4/4</div>
+                  v-if="!isOffHour(i)"
+                  :class="[isPastHour(date, i)]"
+                  class="flex-grow p-4 font-bold text-gray-600 text-sm cursor-pointer"
+                >
+                  <div class="w-full h-5 rounded bg-gray-300 shadow-inner">
+                    <div
+                      class="w-6 h-5 rounded bg-primary text-xs text-white font-bold tracking-widest flex justify-center items-center"
+                    >
+                      4/4
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-          </div>
-         
         </div>
       </div>
-      </div>
-      
     </div>
   </div>
 </template>
@@ -61,139 +77,203 @@ import {
   setHours,
   getHours,
   setDay,
-  differenceInWeeks
+  differenceInWeeks,
 } from "date-fns";
 import { fr } from "date-fns/locale";
-import { computed, watchEffect,watch, ref, onMounted, toRefs, nextTick } from "vue";
+import {
+  computed,
+  watchEffect,
+  watch,
+  ref,
+  onMounted,
+  toRefs,
+  nextTick,
+  reactive,
+} from "vue";
 export default {
   props: {
-    timeSlotsStart: { type: Number, default: 9 }, 
+    timeSlotsStart: { type: Number, default: 9 },
     timeSlotsEnd: { type: Number, default: 18 },
     offHour: { type: Array, default: [13] },
     selectedDate: { type: Number, default: Date.now() },
-    moveByDay: { type: Number, default:0 },
+    moveByDay: { type: Number, default: 0 },
     moveByWeek: { type: Number, default: 0 },
   },
   setup(props, { emit }) {
-
+    const animeWeekState = reactive({
+      start: false,
+      end: false,
+    });
     const dateArray = ref([]);
     let elemId = "";
     let canScroll = true;
 
     watch(() => props.selectedDate, async (newDate, oldDate) => {
-      let refreshView = false;
-      if(dateArray.value.length) {
-        refreshView = true;
-        dateArray.value.length = 0;
+        canScroll =false
+        let refreshView = false;
+        if (dateArray.value.length) {
+          refreshView = true;
+          animeWeekState.start= true;
+          await new Promise((resolve) => setTimeout(resolve, 150));
+          dateArray.value.length = 0;
+        }
+        elemId = addDays(props.selectedDate, 5);
+        const date = addDays(
+          props.selectedDate,
+          -Math.abs(getISODay(props.selectedDate) + 6)
+        );
+        for (let i = 0; i < 21; i++) {
+          const date2 = addDays(date, i);
+          dateArray.value.push(date2);
+        }
+        if (refreshView) {
+          await nextTick();
+          document
+            .getElementById(elemId)
+            .scrollIntoView({ behavior: "auto", block: "end", inline: "end" });
+          await nextTick();
+          animeWeekState.start= false;
+          animeWeekState.end= true;
+          await new Promise((resolve) => setTimeout(resolve, 75));
+          animeWeekState.end= false;
+        }
+        emitCurrentDatesView();
+        canScroll = true;
+      },
+      { immediate: true }
+    );
 
-      }
-      elemId = addDays(props.selectedDate, 5);
-      const date = addDays(props.selectedDate, -Math.abs(getISODay(props.selectedDate) + 6 ));
-      for (let i = 0; i < 21; i++) {
-        const date2 = addDays(date, i);
-        dateArray.value.push(date2);
-      }
-      if(refreshView) {
-        await nextTick();
-        document.getElementById(elemId).scrollIntoView({behavior: "auto", block: "end", inline: "end"});
-      }
-      emitCurrentDatesView();
-    },{immediate: true});
-    
-    
     onMounted(() => {
-      document.getElementById(elemId).scrollIntoView({behavior: "auto", block: "end", inline: "end"});
-      const ro = new ResizeObserver(entries => {
-        document.getElementById(elemId).scrollIntoView({behavior: "auto", block: "end", inline: "end"}); 
+      document
+        .getElementById(elemId)
+        .scrollIntoView({ behavior: "auto", block: "end", inline: "end" });
+      const ro = new ResizeObserver((entries) => {
+        document
+          .getElementById(elemId)
+          .scrollIntoView({ behavior: "auto", block: "end", inline: "end" });
       });
       ro.observe(document.getElementById("calandarElem"));
-    })
-
-
-    watch(() => props.moveByDay, async (newVal, oldVal) => {
-      if(canScroll) {
-        canScroll = false;
-        canScroll = newVal > oldVal ? await dayNext() : await dayPrev();
-        emitCurrentDatesView();
-      }
     });
+
+    watch(
+      () => props.moveByDay,
+      async (newVal, oldVal) => {
+        if (canScroll) {
+          canScroll = false;
+          canScroll = newVal > oldVal ? await dayNext() : await dayPrev();
+          emitCurrentDatesView();
+        }
+      }
+    );
 
     async function dayNext() {
-      elemId = addDays(elemId, 1)
-      document.getElementById(elemId).scrollIntoView({behavior: "smooth", block: "end", inline: "end"});
-      await new Promise(resolve => setTimeout(resolve, 300));
+      elemId = addDays(elemId, 1);
+      document
+        .getElementById(elemId)
+        .scrollIntoView({ behavior: "smooth", block: "end", inline: "end" });
+      await new Promise((resolve) => setTimeout(resolve, 300));
       await addNextWeek();
       return true;
-    };
+    }
 
     async function dayPrev() {
-      elemId = subDays(elemId, 1)
-      document.getElementById(elemId).scrollIntoView({behavior: "smooth", block: "end", inline: "end"});
-      await new Promise(resolve => setTimeout(resolve, 300));
+      elemId = subDays(elemId, 1);
+      document
+        .getElementById(elemId)
+        .scrollIntoView({ behavior: "smooth", block: "end", inline: "end" });
+      await new Promise((resolve) => setTimeout(resolve, 300));
       await addPrevWeek();
       return true;
-    };
+    }
 
-
-
-    watch(() => props.moveByWeek, async (newVal, oldVal) => {
-      if(canScroll) {
-        canScroll = false;
-        canScroll = newVal > oldVal ? await weekNext() : await weekPrev();
-        emitCurrentDatesView();
+    watch(
+      () => props.moveByWeek,
+      async (newVal, oldVal) => {
+        if (canScroll) {
+          canScroll = false;
+          canScroll = newVal > oldVal ? await weekNext() : await weekPrev();
+          emitCurrentDatesView();
+        }
       }
-    });
+    );
 
     async function weekNext() {
-      const res = setDay(elemId,0,{weekStartsOn: 1});
-      elemId = isSameDay(elemId, res) ? addDays(elemId, 7) : res
-      document.getElementById(elemId).scrollIntoView({behavior: "smooth", block: "end", inline: "end"});
-      await new Promise(resolve => setTimeout(resolve, 600));
+      const res = setDay(elemId, 0, { weekStartsOn: 1 });
+      elemId = isSameDay(elemId, res) ? addDays(elemId, 7) : res;
+      animeWeekState.start= true;
+      await new Promise((resolve) => setTimeout(resolve, 150));
+      document
+        .getElementById(elemId)
+        .scrollIntoView({ behavior: "auto", block: "end", inline: "end" });
+      await nextTick();
+      animeWeekState.start= false;
+      animeWeekState.end= true;
+      await new Promise((resolve) => setTimeout(resolve, 75));
+      animeWeekState.end= false;
       await addNextWeek();
       return true;
-    };
+    }
 
     async function weekPrev() {
-      const res = setDay(elemId,0,{weekStartsOn: 0});
+      const res = setDay(elemId, 0, { weekStartsOn: 0 });
       elemId = isSameDay(elemId, res) ? subDays(elemId, 7) : res;
-      document.getElementById(elemId).scrollIntoView({behavior: "smooth", block: "end", inline: "end"});
-      await new Promise(resolve => setTimeout(resolve, 700));
+      animeWeekState.start= true;
+      await new Promise((resolve) => setTimeout(resolve, 150));
+      document
+        .getElementById(elemId)
+        .scrollIntoView({ behavior: "auto", block: "end", inline: "end" });
+      await nextTick();
+      animeWeekState.start= false;
+      animeWeekState.end= true;
+      await new Promise((resolve) => setTimeout(resolve, 75));
+      animeWeekState.end= false;
       await addPrevWeek();
       return true;
-    };
-
+    }
 
     async function addNextWeek() {
-      const lastDay = dateArray.value.slice(-1)[0]
-      if(differenceInWeeks(lastDay, elemId) <= 0){
-        for(let i = 1; i <=7; i++) {
+      const lastDay = dateArray.value.slice(-1)[0];
+      if (differenceInWeeks(lastDay, elemId) <= 0) {
+        for (let i = 1; i <= 7; i++) {
           const newDay = addDays(lastDay, i);
           dateArray.value.push(newDay);
           dateArray.value.shift();
         }
         await nextTick();
-        document.getElementById(elemId).scrollIntoView({behavior: "auto", block: "end", inline: "end"});
+        document
+          .getElementById(elemId)
+          .scrollIntoView({ behavior: "auto", block: "end", inline: "end" });
       }
-    };
+    }
 
     async function addPrevWeek() {
-      const firstDay = dateArray.value[0]
+      const firstDay = dateArray.value[0];
       const calandarStartDay = subDays(elemId, 6);
-      if(differenceInWeeks(calandarStartDay, firstDay) <= 0){
-        for(let i = 1; i <=7; i++) {
+      if (differenceInWeeks(calandarStartDay, firstDay) <= 0) {
+        for (let i = 1; i <= 7; i++) {
           const newDay = subDays(firstDay, i);
           dateArray.value.unshift(newDay);
           dateArray.value.pop();
         }
         await nextTick();
-        document.getElementById(elemId).scrollIntoView({behavior: "auto", block: "end", inline: "end"});
+        document
+          .getElementById(elemId)
+          .scrollIntoView({ behavior: "auto", block: "end", inline: "end" });
       }
-    };
+    }
+
+    const animateWeek = computed(() => {
+      if(animeWeekState.start)
+        return "transition duration-150 opacity-50";
+      if(animeWeekState.end)
+        return "transition duration-75 opacity-100";
+      return "";
+    });
 
     function emitCurrentDatesView() {
       const calandarStartDay = subDays(elemId, 6);
-      emit("current-dates-view", { start: calandarStartDay, end: elemId } )
-    };
+      emit("current-dates-view", { start: calandarStartDay, end: elemId });
+    }
 
     const getHourArray = computed(() => {
       const h = [];
@@ -218,15 +298,27 @@ export default {
       }
     }
     function isOffHour(hour) {
-      return props.offHour.some(v => v === hour);
+      return props.offHour.some((v) => v === hour);
     }
 
     function formatDate(index) {
-      return format(index, "ccc dd LLL", { locale: fr });
+      return format(index, "cccdd LLL", { locale: fr });
     }
-    
-    return { formatDate, getHourArray, isOffHour, dateArray, isPastHour};
-  }
+
+    function ifSameDay(date, date2) {
+      return isSameDay(date, date2);
+    }
+
+    return {
+      formatDate,
+      getHourArray,
+      isOffHour,
+      dateArray,
+      isPastHour,
+      animateWeek,
+      ifSameDay
+    };
+  },
 };
 </script>
 
