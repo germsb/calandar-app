@@ -49,8 +49,8 @@ export default {
 
     query(`query {users(where: {role: guide }) {id, username }}`).then(
       (result) => {
-        guides.value = result.users.map((el) => {
-          return { ...el, select: false };
+        guides.value = result.users.map((el, i) => {
+          return { ...el, select: i == 0 ? true : false };
         });
       }
     );

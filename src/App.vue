@@ -57,16 +57,12 @@
               class="icon icon-lg text-gray-800"
             />
           </button>
-<<<<<<< HEAD
           <button
-            class="border-2 border-gray-600 rounded px-3 py-1 font-bold mx-2 hover:bg-gray-500 hover:bg-opacity-25 focus:outline-none"
+            class="border border-gray-600 rounded px-3 py-1 font-bold text-lg mx-2 hover:bg-gray-500 hover:bg-opacity-25 focus:outline-none"
             @click="selectedDate = Date.now()"
           >
             Aujoud'hui
           </button>
-=======
-          <button class="border border-gray-600 rounded px-3 py-1 font-bold text-lg mx-2 hover:bg-gray-500 hover:bg-opacity-25 focus:outline-none" @click="selectedDate = Date.now()">Aujoud'hui</button>
->>>>>>> e7a7e76dfa2351b805eaa4cc7bfe9a9e0224803b
           <button
             class="rounded-full hover:bg-gray-500 hover:bg-opacity-25 p-2 focus:outline-none"
             @click="day++"
