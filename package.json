@@ -6,7 +6,11 @@
     "build": "vite build"
   },
   "dependencies": {
+    "apollo-boost": "^0.4.9",
+    "apollo-cache-inmemory": "^1.6.6",
+    "apollo-cache-persist": "^0.1.1",
     "date-fns": "^2.15.0",
+    "graphql": "^15.3.0",
     "vue": "^3.0.0-rc.1"
   },
   "devDependencies": {
