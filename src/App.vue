@@ -35,7 +35,7 @@
       <div class="flex-1 flex justify-end items-end mr-16">
         <div class="flex items-center">
           <button
-            class="rounded-full hover:bg-gray-500 hover:bg-opacity-25 p-1 focus:outline-none"
+            class="rounded-full hover:bg-gray-500 hover:bg-opacity-25 p-2 focus:outline-none"
             @click="week--"
           >
             <c-icon
@@ -43,39 +43,43 @@
               data-icon="test"
               path="M11.64 5.23a1 1 0 0 0-1.41.13l-5 6a1 1 0 0 0 0 1.27l4.83 6a1 1 0 0 0 .78.37a1 1 0 0 0 .78-1.63L7.29 12l4.48-5.37a1 1 0 0 0-.13-1.4z"
               path2="M14.29 12l4.48-5.37a1 1 0 0 0-1.54-1.28l-5 6a1 1 0 0 0 0 1.27l4.83 6a1 1 0 0 0 .78.37a1 1 0 0 0 .78-1.63z"
-              class="icon icon-xl text-gray-800"
+              class="icon icon-lg text-gray-800"
             />
           </button>
           <button
-            class="rounded-full hover:bg-gray-500 hover:bg-opacity-25 p-1 focus:outline-none"
+            class="rounded-full hover:bg-gray-500 hover:bg-opacity-25 p-2 focus:outline-none"
             @click="day--"
           >
             <c-icon
               viewBox="0 0 24 24"
               data-icon="test"
               path="M13.83 19a1 1 0 0 1-.78-.37l-4.83-6a1 1 0 0 1 0-1.27l5-6a1 1 0 0 1 1.54 1.28L10.29 12l4.32 5.36a1 1 0 0 1-.78 1.64z"
-              class="icon icon-xl text-gray-800"
+              class="icon icon-lg text-gray-800"
             />
           </button>
+<<<<<<< HEAD
           <button
             class="border-2 border-gray-600 rounded px-3 py-1 font-bold mx-2 hover:bg-gray-500 hover:bg-opacity-25 focus:outline-none"
             @click="selectedDate = Date.now()"
           >
             Aujoud'hui
           </button>
+=======
+          <button class="border border-gray-600 rounded px-3 py-1 font-bold text-lg mx-2 hover:bg-gray-500 hover:bg-opacity-25 focus:outline-none" @click="selectedDate = Date.now()">Aujoud'hui</button>
+>>>>>>> e7a7e76dfa2351b805eaa4cc7bfe9a9e0224803b
           <button
-            class="rounded-full hover:bg-gray-500 hover:bg-opacity-25 p-1 focus:outline-none"
+            class="rounded-full hover:bg-gray-500 hover:bg-opacity-25 p-2 focus:outline-none"
             @click="day++"
           >
             <c-icon
               viewBox="0 0 24 24"
               data-icon="test"
               path="M10 19a1 1 0 0 1-.64-.23a1 1 0 0 1-.13-1.41L13.71 12L9.39 6.63a1 1 0 0 1 .15-1.41a1 1 0 0 1 1.46.15l4.83 6a1 1 0 0 1 0 1.27l-5 6A1 1 0 0 1 10 19z"
-              class="icon icon-xl text-gray-800"
+              class="icon icon-lg text-gray-800"
             />
           </button>
           <button
-            class="rounded-full hover:bg-gray-500 hover:bg-opacity-25 p-1 focus:outline-none"
+            class="rounded-full hover:bg-gray-500 hover:bg-opacity-25 p-2 focus:outline-none"
             @click="week++"
           >
             <c-icon
@@ -83,7 +87,7 @@
               data-icon="test"
               path="M18.78 11.37l-4.78-6a1 1 0 0 0-1.41-.15a1 1 0 0 0-.15 1.41L16.71 12l-4.48 5.37a1 1 0 0 0 .13 1.41A1 1 0 0 0 13 19a1 1 0 0 0 .77-.36l5-6a1 1 0 0 0 .01-1.27z"
               path2="M7 5.37a1 1 0 0 0-1.61 1.26L9.71 12l-4.48 5.36a1 1 0 0 0 .13 1.41A1 1 0 0 0 6 19a1 1 0 0 0 .77-.36l5-6a1 1 0 0 0 0-1.27z"
-              class="icon icon-xl text-gray-800"
+              class="icon icon-lg text-gray-800"
             />
           </button>
           <div class="mx-3 text-xl font-bold capitalize w-56">
@@ -98,7 +102,7 @@
     </div>-->
 
     <div
-      class="flex-grow flex bg-gray-100 overflow-hidden p-5 shadow-neuro1 rounded-xxl m-8"
+      class="flex-grow flex bg-gray-100 overflow-hidden px-5 pt-3 pb-5 shadow-neuro1 rounded-xxl mx-8 mt-8 mb-16"
     >
       <!-- <guide /> -->
       <v-guide />
@@ -112,11 +116,11 @@
     </div>
 
     <!-- footer -->
-    <div
-      class="h-16 flex-shrink-0 bg-gray-100 text-2xl text-gray-800 font-bold flex justify-start items-center pl-2 -mt-px z-10"
+    <!-- <div
+      class="h-12 flex-shrink-0 bg-gray-100 text-2xl text-gray-800 font-bold flex justify-start items-center pl-2 -mt-px z-10"
     >
       Footer
-    </div>
+    </div> -->
   </div>
 </template>
 
