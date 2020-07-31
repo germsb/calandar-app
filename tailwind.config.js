@@ -6,7 +6,9 @@ module.exports = {
         julie: ["Caveat", "cursive"],
       },
       minHeight: {
+        "16": "4rem",
         "14": "3.5rem",
+        "12": "3rem"
       },
       boxShadow: {
         neuro1: "7px 7px 14px #dae0e6, -7px -7px 10px #ffffff",
@@ -40,6 +42,9 @@ module.exports = {
     backgroundColor: ["responsive", "hover", "focus", "group-hover"],
     visibility: ["responsive", "group-hover"],
     zIndex: ["responsive", "hover"],
+    borderStyle: ['responsive', 'hover'],
+    borderWidth: ['responsive', 'hover'],
+
   },
   corePlugins: {
     container: false,
