@@ -25,7 +25,7 @@
       >
         <!-- day container -->
         <div
-          v-for="(date, i) in dateArray"
+          v-for="date in dateArray"
           :key="date + 'f'"
           :id="date"
           class="flex-shrink-0 min-h-full h-full"
@@ -36,9 +36,11 @@
             <div
               class="h-12 min-h-12 sticky top-0 flex justify-center border-b border-gray-400 items-center px-2 bg-gray-100 font-bold text-base"
             >
-              <div v-if="ifSameDay(date, selectedDate)" class="mr-1 rounded-full w-3 h-3 bg-primary "></div>
+              <div
+                v-if="ifSameDay(date, selectedDate)"
+                class="mr-1 rounded-full w-3 h-3 bg-primary"
+              ></div>
               {{ formatDate(date) }}
-              
             </div>
             <!-- cellule -->
             <div
@@ -109,12 +111,14 @@ export default {
     let elemId = "";
     let canScroll = true;
 
-    watch(() => props.selectedDate, async (newDate, oldDate) => {
-        canScroll =false
+    watch(
+      () => props.selectedDate,
+      async (newDate, oldDate) => {
+        canScroll = false;
         let refreshView = false;
         if (dateArray.value.length) {
           refreshView = true;
-          animeWeekState.start= true;
+          animeWeekState.start = true;
           await new Promise((resolve) => setTimeout(resolve, 150));
           dateArray.value.length = 0;
         }
@@ -133,10 +137,10 @@ export default {
             .getElementById(elemId)
             .scrollIntoView({ behavior: "auto", block: "end", inline: "end" });
           await nextTick();
-          animeWeekState.start= false;
-          animeWeekState.end= true;
+          animeWeekState.start = false;
+          animeWeekState.end = true;
           await new Promise((resolve) => setTimeout(resolve, 75));
-          animeWeekState.end= false;
+          animeWeekState.end = false;
         }
         emitCurrentDatesView();
         canScroll = true;
@@ -201,16 +205,16 @@ export default {
     async function weekNext() {
       const res = setDay(elemId, 0, { weekStartsOn: 1 });
       elemId = isSameDay(elemId, res) ? addDays(elemId, 7) : res;
-      animeWeekState.start= true;
+      animeWeekState.start = true;
       await new Promise((resolve) => setTimeout(resolve, 150));
       document
         .getElementById(elemId)
         .scrollIntoView({ behavior: "auto", block: "end", inline: "end" });
       await nextTick();
-      animeWeekState.start= false;
-      animeWeekState.end= true;
+      animeWeekState.start = false;
+      animeWeekState.end = true;
       await new Promise((resolve) => setTimeout(resolve, 75));
-      animeWeekState.end= false;
+      animeWeekState.end = false;
       await addNextWeek();
       return true;
     }
@@ -218,16 +222,16 @@ export default {
     async function weekPrev() {
       const res = setDay(elemId, 0, { weekStartsOn: 0 });
       elemId = isSameDay(elemId, res) ? subDays(elemId, 7) : res;
-      animeWeekState.start= true;
+      animeWeekState.start = true;
       await new Promise((resolve) => setTimeout(resolve, 150));
       document
         .getElementById(elemId)
         .scrollIntoView({ behavior: "auto", block: "end", inline: "end" });
       await nextTick();
-      animeWeekState.start= false;
-      animeWeekState.end= true;
+      animeWeekState.start = false;
+      animeWeekState.end = true;
       await new Promise((resolve) => setTimeout(resolve, 75));
-      animeWeekState.end= false;
+      animeWeekState.end = false;
       await addPrevWeek();
       return true;
     }
@@ -264,10 +268,8 @@ export default {
     }
 
     const animateWeek = computed(() => {
-      if(animeWeekState.start)
-        return "transition duration-150 opacity-50";
-      if(animeWeekState.end)
-        return "transition duration-75 opacity-100";
+      if (animeWeekState.start) return "transition duration-150 opacity-50";
+      if (animeWeekState.end) return "transition duration-75 opacity-100";
       return "";
     });
 
@@ -317,7 +319,7 @@ export default {
       dateArray,
       isPastHour,
       animateWeek,
-      ifSameDay
+      ifSameDay,
     };
   },
 };

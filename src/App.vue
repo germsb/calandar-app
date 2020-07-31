@@ -2,7 +2,7 @@
   <!-- header -->
   <div class="flex flex-col h-full bg-gray-200">
     <div class="h-20 flex-shrink-0 flex">
-      <div class="">
+      <div class>
         <div class="inline-flex m-5">
           <button class="btn btn-gray rounded-l-full">
             <c-icon
@@ -45,7 +45,6 @@
               path2="M14.29 12l4.48-5.37a1 1 0 0 0-1.54-1.28l-5 6a1 1 0 0 0 0 1.27l4.83 6a1 1 0 0 0 .78.37a1 1 0 0 0 .78-1.63z"
               class="icon icon-lg text-gray-800"
             />
-            
           </button>
           <button
             class="rounded-full hover:bg-gray-500 hover:bg-opacity-25 p-2 focus:outline-none"
@@ -57,9 +56,13 @@
               path="M13.83 19a1 1 0 0 1-.78-.37l-4.83-6a1 1 0 0 1 0-1.27l5-6a1 1 0 0 1 1.54 1.28L10.29 12l4.32 5.36a1 1 0 0 1-.78 1.64z"
               class="icon icon-lg text-gray-800"
             />
-            
           </button>
-          <button class="border border-gray-600 rounded px-3 py-1 font-bold text-lg mx-2 hover:bg-gray-500 hover:bg-opacity-25 focus:outline-none" @click="selectedDate = Date.now()">Aujoud'hui</button>
+          <button
+            class="border border-gray-600 rounded px-3 py-1 font-bold text-lg mx-2 hover:bg-gray-500 hover:bg-opacity-25 focus:outline-none"
+            @click="selectedDate = Date.now()"
+          >
+            Aujoud'hui
+          </button>
           <button
             class="rounded-full hover:bg-gray-500 hover:bg-opacity-25 p-2 focus:outline-none"
             @click="day++"
@@ -70,7 +73,6 @@
               path="M10 19a1 1 0 0 1-.64-.23a1 1 0 0 1-.13-1.41L13.71 12L9.39 6.63a1 1 0 0 1 .15-1.41a1 1 0 0 1 1.46.15l4.83 6a1 1 0 0 1 0 1.27l-5 6A1 1 0 0 1 10 19z"
               class="icon icon-lg text-gray-800"
             />
-            
           </button>
           <button
             class="rounded-full hover:bg-gray-500 hover:bg-opacity-25 p-2 focus:outline-none"
@@ -83,7 +85,6 @@
               path2="M7 5.37a1 1 0 0 0-1.61 1.26L9.71 12l-4.48 5.36a1 1 0 0 0 .13 1.41A1 1 0 0 0 6 19a1 1 0 0 0 .77-.36l5-6a1 1 0 0 0 0-1.27z"
               class="icon icon-lg text-gray-800"
             />
-            
           </button>
           <div class="mx-3 text-xl font-bold capitalize w-56">
             {{ currentMonthAndYear }}
@@ -94,7 +95,7 @@
     <!-- <div class="flex justify-start items-center pl-5 pr-5">
       <v-tabBar :titles="['titre 1','titre 2','titre 3','titre 4']" />
       <v-tabBar :titles="['titre 1','titre 2','titre 3','titre 4']" inset />
-    </div> -->
+    </div>-->
 
     <div
       class="flex-grow flex bg-gray-100 overflow-hidden px-5 pt-3 pb-5 shadow-neuro1 rounded-xxl mx-8 mt-8 mb-16"
@@ -127,6 +128,7 @@ import TabBar from "./components/TabBar.vue";
 import { ref } from "vue";
 import { isSameMonth, isSameYear, format } from "date-fns";
 import { fr } from "date-fns/locale";
+import { query, mutation } from "./api";
 
 export default {
   name: "App",

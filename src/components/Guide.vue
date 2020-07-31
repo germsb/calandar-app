@@ -13,13 +13,22 @@
         v-for="(guide, i) in guides"
         :key="guide + 'f'"
         @click="changeGuide(i)"
-        :class="'p-1 mb-2 bg-white rounded-full flex cursor-pointer items-center transition-all duration-200 '+(guide.select ? 'w-48' : 'w-40 hover:w-48')"
+        :class="
+          'p-1 mb-2 bg-white rounded-full flex cursor-pointer items-center transition-all duration-200 ' +
+          (guide.select ? 'w-48' : 'w-40 hover:w-48')
+        "
       >
-        <img :src="'https://i.pravatar.cc/50?u='+guide.name" class="mr-3 inline rounded-full w-8" />
+        <img
+          :src="'https://i.pravatar.cc/50?u=' + guide.username"
+          class="mr-3 inline rounded-full w-8"
+        />
         <div class="flex-1">
-          <span>{{ guide.name }}</span>
+          <span>{{ guide.username }}</span>
         </div>
-        <div v-if="guide.select" class="rounded-full bg-primary w-4 h-4 mr-2"></div>
+        <div
+          v-if="guide.select"
+          class="rounded-full bg-primary w-4 h-4 mr-2"
+        ></div>
       </div>
     </div>
   </div>
@@ -28,35 +37,23 @@
 <script>
 import { ref } from "vue";
 import Icon from "./Icon.vue";
+import { query, mutation } from "../api";
 
 export default {
   name: "v-guide",
   components: {
-    "c-icon": Icon
+    "c-icon": Icon,
   },
   setup() {
-    const guides = ref([
-      {
-        name: "Germain",
-        select: false
-      },
-      {
-        name: "Nicolas",
-        select: false
-      },
-      {
-        name: "Mélina",
-        select: true
-      },
-      {
-        name: "Lydie",
-        select: false
-      },
-      {
-        name: "Julie",
-        select: false
+    const guides = ref([]);
+
+    query(`query {users(where: {role: guide }) {id, username }}`).then(
+      (result) => {
+        guides.value = result.users.map((el, i) => {
+          return { ...el, select: i == 0 ? true : false };
+        });
       }
-    ]);
+    );
 
     function changeGuide(index) {
       guides.value = guides.value.map((el, i) => {
@@ -69,6 +66,6 @@ export default {
       });
     }
     return { changeGuide, guides };
-  }
+  },
 };
 </script>
