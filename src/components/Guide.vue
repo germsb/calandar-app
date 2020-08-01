@@ -45,7 +45,7 @@ export default {
     "c-icon": Icon,
   },
   setup() {
-    const guides = ref([]);
+    let guides = ref([]);
 
     query(`query {users(where: {role: guide }) {id, username }}`).then(
       (result) => {

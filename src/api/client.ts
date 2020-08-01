@@ -1,28 +1,12 @@
 import ApolloClient from "apollo-boost";
-import { InMemoryCache } from "apollo-cache-inmemory";
-import { persistCache } from "apollo-cache-persist";
-
-const cache = new InMemoryCache();
-
-persistCache({
-  cache,
-  debug: process.env.NODE_ENV !== "production",
-  storage: window.localStorage,
-});
 
 const getGQL = new ApolloClient({
   uri: "https://deluge.titeya.com/graphql",
+  credentials: "include",
   fetchOptions: {
     credentials: "include",
   },
-  request: async (operation) => {
-    const token = "";
-    operation.setContext({
-      headers: {
-        authorization: token,
-      },
-    });
-  },
+
   onError: ({ graphQLErrors, networkError }) => {
     if (graphQLErrors) {
       console.log(graphQLErrors);
