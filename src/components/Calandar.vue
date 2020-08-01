@@ -6,12 +6,12 @@
     >
       <!-- sticky left bar heure vertical  -->
       <div class="w-12 min-h-full h-full sticky flex-shrink-0 left-0 z-20">
-        <div class="flex flex-col min-h-full shadow-lg">
+        <div class="flex flex-col min-h-full">
           <div class="h-12 bg-gray-100 sticky top-0"></div>
           <div
             v-for="i in getHourArray"
             :key="i"
-            class="min-h-16 flex-grow bg-gray-100 flex items-center justify-center font-bold text-sm"
+            class="min-h-16 flex-grow bg-gray-100 flex items-center justify-center font-bold text-sm border-r border-gray-400"
           >
             {{ i }}h
           </div>
