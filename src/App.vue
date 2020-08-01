@@ -7,7 +7,7 @@
 <script>
 import Dashboard from "./views/Dashboard.vue";
 import Login from "./components/Login.vue";
-import loginuser from "./store";
+import { loginuser, error } from "./store";
 import { me } from "./actions/me";
 import { watch } from "vue";
 

@@ -6,36 +6,16 @@ const getGQL = new ApolloClient({
   fetchOptions: {
     credentials: "include",
   },
-
-  onError: ({ graphQLErrors, networkError }) => {
+  onError: ({ graphQLErrors, networkError, operation, forward }) => {
     if (graphQLErrors) {
-      ///console.log(graphQLErrors);
-      // sendToLoggingService(graphQLErrors);
+      graphQLErrors.forEach(async (err) => {
+        console.log(`[GraphQL error]: ${err}`);
+      });
     }
     if (networkError) {
-      // logoutUser();
-      //console.log("logout");
+      console.log(`[Network error]: ${networkError}`);
     }
   },
-  clientState: {
-    defaults: {
-      isConnected: true,
-    },
-    resolvers: {
-      Mutation: {
-        updateNetworkStatus: (_, { isConnected }, { cache }) => {
-          cache.writeData({ data: { isConnected } });
-          return null;
-        },
-      },
-    },
-  },
-  // cacheRedirects: {
-  //   Query: {
-  //     shop: (_, { id }, { getCacheKey }) =>
-  //       getCacheKey({ __typename: "shop", id }),
-  //   },
-  // },
 });
 
 export default getGQL;
