@@ -9,11 +9,11 @@
     "apollo-boost": "^0.4.9",
     "date-fns": "^2.15.0",
     "graphql": "^15.3.0",
-    "vue": "^3.0.0-rc.1"
+    "vue": "^3.0.0-rc.5"
   },
   "devDependencies": {
-    "@vue/compiler-sfc": "^3.0.0-rc.1",
+    "@vue/compiler-sfc": "^3.0.0-rc.5",
     "tailwindcss": "^1.5.2",
-    "vite": "^1.0.0-rc.1"
+    "vite": "^1.0.0-rc.4"
   }
 }

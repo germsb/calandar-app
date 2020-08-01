@@ -4,33 +4,37 @@
       id="calandarElem"
       class="min-h-full min-w-full overflow-y-auto overflow-x-hidden flex"
     >
+      <!-- sticky left bar heure vertical  -->
       <div class="w-12 min-h-full h-full sticky flex-shrink-0 left-0 z-20">
-        <div class="flex flex-col min-h-full border-r">
+        <div class="flex flex-col min-h-full">
           <div class="h-12 bg-gray-100 sticky top-0"></div>
           <div
             v-for="i in getHourArray"
             :key="i"
-            class="min-h-14 flex-grow bg-gray-100 flex items-center justify-center font-bold text-sm"
+            class="min-h-16 flex-grow bg-gray-100 flex items-center justify-center font-bold text-sm border-r border-gray-400"
           >
             {{ i }}h
           </div>
         </div>
       </div>
+      <!-- cellule container -->
       <div
         id="date-container"
-        class="flex flex-grow min-w-full overflow-x-hidden transform"
+        class="flex flex-grow min-w-full transform"
         :class="animateWeek"
       >
+        <!-- day container -->
         <div
           v-for="date in dateArray"
           :key="date + 'f'"
           :id="date"
           class="flex-shrink-0 min-h-full h-full"
-          :style="`width: max(calc((100% - 3rem) / 7), 120px);`"
+          :style="`width: max(calc((100% - 2.99rem) / 7), 120px);`"
         >
-          <div class="flex flex-col min-h-full">
+          <div class="flex flex-col min-h-full h-full">
+            <!-- sticky top date -->
             <div
-              class="h-12 sticky top-0 flex justify-center border-b items-center px-2 bg-gray-100 font-bold text-base"
+              class="h-12 min-h-12 sticky top-0 flex justify-center border-b border-gray-400 items-center px-2 bg-gray-100 font-bold text-base"
             >
               <div
                 v-if="ifSameDay(date, selectedDate)"
@@ -38,26 +42,25 @@
               ></div>
               {{ formatDate(date) }}
             </div>
-            <div class="flex flex-col flex-grow border-r">
-              <div
-                v-for="i in getHourArray"
-                :key="i"
-                class="min-h-14 flex-grow flex"
-              >
-                <div
-                  v-if="!isOffHour(i)"
-                  :class="[isPastHour(date, i)]"
-                  class="flex-grow p-4 font-bold text-gray-600 text-sm cursor-pointer"
-                >
-                  <div class="w-full h-5 rounded bg-gray-300 shadow-inner">
-                    <div
-                      class="w-6 h-5 rounded bg-primary text-xs text-white font-bold tracking-widest flex justify-center items-center"
-                    >
-                      4/4
-                    </div>
+            <!-- cellule -->
+            <div
+              v-for="hour in getHourArray"
+              :key="hour"
+              class="border-gray-400 flex-1 min-h-16"
+              :class="`${isOffHour(hour) ? ' border-b' : 'border-b border-r'}`"
+            >
+              <!-- cellule active -->
+              <div v-if="!isOffHour(hour)" class="h-full min-h-full flex flex-col cursor-pointer border-2 p-2" :class="isPastHour(date, hour)">
+                <div class="w-full h-5 rounded bg-gray-300 shadow-inner">
+                  <div
+                    class="w-6 h-5 rounded bg-primary text-xs text-white font-bold tracking-widest flex justify-center items-center"
+                  >
+                    4/4
                   </div>
                 </div>
               </div>
+              <!-- cellule off -->
+              <div v-else class="flex-1 border-2 border-gray-100"></div>
             </div>
           </div>
         </div>
@@ -72,11 +75,9 @@ import {
   subDays,
   format,
   getISODay,
-  isThisHour,
   isSameDay,
   isPast,
   isToday,
-  setHours,
   getHours,
   setDay,
   differenceInWeeks,
@@ -289,14 +290,14 @@ export default {
       if (isToday(date)) {
         const localHour = getHours(Date.now());
         return localHour > hour
-          ? "bg-gray-100 border border-dashed border-gray-100 hover:border-gray-400"
+          ? "bg-gray-100 border-dashed border-gray-100 hover:border-gray-400"
           : localHour === hour
-          ? "bg-white border border-primary rounded"
-          : "bg-white border border-dashed border-white hover:border-primary";
+          ? "bg-white border-primary"
+          : "bg-white border-dashed border-white hover:border-primary";
       } else {
         return isPast(date)
-          ? "bg-gray-100 border border-dashed border-gray-100 hover:border-gray-400"
-          : "bg-white border border-dashed border-white hover:border-primary";
+          ? "bg-gray-100 border-dashed border-gray-100 hover:border-gray-400"
+          : "bg-white border-dashed border-white hover:border-primary";
       }
     }
     function isOffHour(hour) {
