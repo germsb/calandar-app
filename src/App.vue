@@ -1,6 +1,6 @@
 <template>
   <!-- <dashboard /> -->
-  <v-dashboard v-if="loginuser" />
+  <v-dashboard v-if="login" />
   <v-login v-else />
 </template>
 
@@ -19,8 +19,8 @@ export default {
   },
   setup() {
     me();
-    watch(loginuser);
-    return { loginuser };
+    const login = loginuser;
+    return { login };
   }
 };
 </script>
