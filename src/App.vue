@@ -9,18 +9,19 @@ import Dashboard from "./views/Dashboard.vue";
 import Login from "./components/Login.vue";
 import loginuser from "./store";
 import { me } from "./actions/me";
+import { watch } from "vue";
 
 export default {
   name: "App",
   components: {
     "v-dashboard": Dashboard,
-    "v-login": Login,
+    "v-login": Login
   },
   setup() {
     me();
-    console.log(loginuser);
+    watch(loginuser);
     return { loginuser };
-  },
+  }
 };
 </script>
 

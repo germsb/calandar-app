@@ -9,12 +9,12 @@ const getGQL = new ApolloClient({
 
   onError: ({ graphQLErrors, networkError }) => {
     if (graphQLErrors) {
-      console.log(graphQLErrors);
+      ///console.log(graphQLErrors);
       // sendToLoggingService(graphQLErrors);
     }
     if (networkError) {
       // logoutUser();
-      console.log("logout");
+      //console.log("logout");
     }
   },
   clientState: {
