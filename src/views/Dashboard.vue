@@ -104,6 +104,7 @@
       <v-guide />
       <!-- <agenda /> -->
       <v-calandar
+        :firstDayOfWeek="0"
         :moveByDay="day"
         :moveByWeek="week"
         :selectedDate="selectedDate"
@@ -127,7 +128,7 @@ import Icon from "../components/Icon.vue";
 import TabBar from "../components/TabBar.vue";
 import { ref } from "vue";
 import { isSameMonth, isSameYear, format } from "date-fns";
-import { fr } from "date-fns/locale";
+import fr from "date-fns/locale/fr";
 import { query, mutation } from "../api";
 
 export default {

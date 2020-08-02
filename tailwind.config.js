@@ -1,5 +1,12 @@
 module.exports = {
-  purge: ["./src/**/*.html", "./src/**/*.vue", "./src/**/*.jsx"],
+  purge: {
+    enabled: true,
+    content: [
+      "./src/**/*.html",
+      "./src/**/*.vue",
+      "./src/**/*.jsx"
+    ]
+  },
   theme: {
     extend: {
       fontFamily: {

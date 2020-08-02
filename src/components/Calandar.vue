@@ -29,18 +29,21 @@
           :key="date + 'f'"
           :id="date"
           class="flex-shrink-0 min-h-full h-full"
-          :style="`width: max(calc((100% - 2.99rem) / 7), 120px);`"
+          :style="`width: max(calc((100% - 2.99rem) / 7), 130px);`"
         >
           <div class="flex flex-col min-h-full h-full">
             <!-- sticky top date -->
             <div
-              class="h-12 min-h-12 sticky top-0 flex justify-center border-b border-gray-400 items-center px-2 bg-gray-100 font-bold text-base"
+              class="h-12 min-h-12 sticky top-0 flex justify-center border-b border-gray-400 items-center px-2 bg-gray-100"
             >
+              <div class="font-bold text-base relative">
+                {{ formatDate(date) }}
               <div
                 v-if="ifSameDay(date, selectedDate)"
-                class="mr-1 rounded-full w-3 h-3 bg-primary"
+                class=" rounded-full absolute bottom-0 left-0 right-0 -mb-1 -mx-1 h-1 bg-primary"
               ></div>
-              {{ formatDate(date) }}
+              </div>
+              
             </div>
             <!-- cellule -->
             <div
@@ -80,9 +83,10 @@ import {
   isToday,
   getHours,
   setDay,
+  setISODay,
   differenceInWeeks,
 } from "date-fns";
-import { fr } from "date-fns/locale";
+import fr from "date-fns/locale/fr";
 import {
   computed,
   watchEffect,
@@ -99,8 +103,24 @@ export default {
     timeSlotsEnd: { type: Number, default: 18 },
     offHour: { type: Array, default: [13] },
     selectedDate: { type: Number, default: Date.now() },
-    moveByDay: { type: Number, default: 0 },
-    moveByWeek: { type: Number, default: 0 },
+    moveByDay: {
+      /* ++ move to next day, -- move to prev day */
+      type: Number,
+      default: 0
+    },
+    moveByWeek: {
+      /* ++ move to next week, -- move to prev week */
+      type: Number,
+      default: 0
+    },
+    firstDayOfWeek: {
+      /* dimanche: 0, lundi: 1 */
+      type: Number,
+      default: 1,
+      validator: function(value) {
+        return [0, 1].indexOf(value) !== -1
+      }
+    }
   },
   setup(props, { emit }) {
     const animeWeekState = reactive({
@@ -123,9 +143,9 @@ export default {
           dateArray.value.length = 0;
         }
         elemId = addDays(props.selectedDate, 5);
-        const date = addDays(
+        const date = subDays(
           props.selectedDate,
-          -Math.abs(getISODay(props.selectedDate) + 6)
+          getISODay(props.selectedDate) + 7 - props.firstDayOfWeek
         );
         for (let i = 0; i < 21; i++) {
           const date2 = addDays(date, i);
@@ -203,7 +223,8 @@ export default {
     );
 
     async function weekNext() {
-      const res = setDay(elemId, 0, { weekStartsOn: 1 });
+      const res = props.firstDayOfWeek === 1 ? setISODay(elemId, 7) : setDay(elemId, 6);
+      console.log(res);
       elemId = isSameDay(elemId, res) ? addDays(elemId, 7) : res;
       animeWeekState.start = true;
       await new Promise((resolve) => setTimeout(resolve, 150));
@@ -220,7 +241,9 @@ export default {
     }
 
     async function weekPrev() {
-      const res = setDay(elemId, 0, { weekStartsOn: 0 });
+      const resp = setDay(elemId, 0, { weekStartsOn: 0 });
+      const res = props.firstDayOfWeek === 1 ? resp : subDays(resp, 1);
+      console.log(res);
       elemId = isSameDay(elemId, res) ? subDays(elemId, 7) : res;
       animeWeekState.start = true;
       await new Promise((resolve) => setTimeout(resolve, 150));
@@ -292,7 +315,7 @@ export default {
         return localHour > hour
           ? "bg-gray-100 border-dashed border-gray-100 hover:border-gray-400"
           : localHour === hour
-          ? "bg-white border-primary"
+          ? "bg-white border-primary hover:border-dashed"
           : "bg-white border-dashed border-white hover:border-primary";
       } else {
         return isPast(date)
