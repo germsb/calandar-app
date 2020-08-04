@@ -19,7 +19,7 @@ export default {
   },
   setup() {
     me();
-    const login = loginuser;
+    const login = true; // loginuser;
     return { login };
   }
 };

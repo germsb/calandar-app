@@ -1,17 +1,19 @@
 <template>
-  <div class="flex-grow flex overflow-hidden">
+  <div class="flex-1 flex relative overflow-x-hidden pb-12 pr-12"> 
+    <div class="flex-1 flex  select-none overflow-hidden ">
     <div
       id="calandarElem"
       class="min-h-full min-w-full overflow-y-auto overflow-x-hidden flex"
     >
       <!-- sticky left bar heure vertical  -->
-      <div class="w-12 min-h-full h-full sticky flex-shrink-0 left-0 z-20">
+      <div class="w-12 min-h-full h-full sticky left-0 flex-shrink-0  z-20">
         <div class="flex flex-col min-h-full">
-          <div class="h-12 bg-gray-100 sticky top-0"></div>
+          <div class="h-12 bg-gray-200 sticky top-0"></div>
           <div
             v-for="i in getHourArray"
             :key="i"
-            class="min-h-16 flex-grow bg-gray-100 flex items-center justify-center font-bold text-sm border-r border-gray-400"
+            class="min-h-16 flex-grow bg-gray-200 flex items-center justify-center font-bold text-sm border-gray-400"
+            
           >
             {{ i }}h
           </div>
@@ -28,19 +30,19 @@
           v-for="date in dateArray"
           :key="date + 'f'"
           :id="date"
-          class="flex-shrink-0 min-h-full h-full"
+          class="flex-shrink-0 h-full"
           :style="`width: max(calc((100% - 2.99rem) / 7), 130px);`"
         >
-          <div class="flex flex-col min-h-full h-full">
+          <div class="flex flex-col" :style="`height: max(100%, calc(4rem * ${getHourArray.length}) )`">
             <!-- sticky top date -->
             <div
-              class="h-12 min-h-12 sticky top-0 flex justify-center border-b border-gray-400 items-center px-2 bg-gray-100"
+              class="h-12 min-h-12 sticky top-0 flex justify-center items-center px-2 bg-gray-200"
             >
-              <div class="font-bold text-base relative">
+              <div class="font-bold text-base relative pb-2">
                 {{ formatDate(date) }}
               <div
                 v-if="ifSameDay(date, selectedDate)"
-                class=" rounded-full absolute bottom-0 left-0 right-0 -mb-1 -mx-1 h-1 bg-primary"
+                class=" rounded-full absolute bottom-0 left-0 right-0  -mx-1 h-1 bg-primary"
               ></div>
               </div>
               
@@ -53,7 +55,7 @@
               :class="`${isOffHour(hour) ? ' border-b' : 'border-b border-r'}`"
             >
               <!-- cellule active -->
-              <div v-if="!isOffHour(hour)" class="h-full min-h-full flex flex-col cursor-pointer border-2 p-2" :class="isPastHour(date, hour)">
+              <div v-if="!isOffHour(hour)" class="h-full min-h-full flex flex-col cursor-pointer border-2 p-2 overflow-hidden" :class="isPastHour(date, hour)">
                 <div class="w-full h-5 rounded bg-gray-300 shadow-inner">
                   <div
                     class="w-6 h-5 rounded bg-primary text-xs text-white font-bold tracking-widest flex justify-center items-center"
@@ -63,13 +65,16 @@
                 </div>
               </div>
               <!-- cellule off -->
-              <div v-else class="flex-1 border-2 border-gray-100"></div>
+              <div v-else class="h-full min-h-full bg-gray-100 border-2 border-gray-100"></div>
             </div>
           </div>
         </div>
       </div>
     </div>
+    </div>
+    <div class="absolute top-0 right-0 bottom-0 left-0 shadow-xl-center z-40 mb-12 mr-12 border border-gray-400 pointer-events-none" style="margin-top: 47px; margin-left: 47px"></div>
   </div>
+  
 </template>
 
 <script>
@@ -313,14 +318,14 @@ export default {
       if (isToday(date)) {
         const localHour = getHours(Date.now());
         return localHour > hour
-          ? "bg-gray-100 border-dashed border-gray-100 hover:border-gray-400"
+          ? "bg-gray-100 border-gray-100 hover:border-gray-400"
           : localHour === hour
-          ? "bg-white border-primary hover:border-dashed"
-          : "bg-white border-dashed border-white hover:border-primary";
+          ? "bg-white border-dashed border-primary hover:border-solid"
+          : "bg-white border-double border-white hover:border-primary";
       } else {
         return isPast(date)
-          ? "bg-gray-100 border-dashed border-gray-100 hover:border-gray-400"
-          : "bg-white border-dashed border-white hover:border-primary";
+          ? "bg-gray-100 border-gray-100 hover:border-gray-400"
+          : "bg-white border-white hover:border-primary";
       }
     }
     function isOffHour(hour) {

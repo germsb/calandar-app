@@ -3,14 +3,14 @@
   <div class="flex flex-col h-full bg-gray-200">
     <div class="h-20 flex-shrink-0 flex">
       <div class>
-        <div class="inline-flex m-5">
+        <div class="inline-flex m-5 rounded-full border border-gray-400">
           <button class="btn btn-gray rounded-l-full">
             <c-icon
               viewBox="0 0 20 20"
               data-icon="test"
               path="M10,1 L20,7 L10,13 L0,7 L10,1 Z M16.6666667,11 L20,13 L10,19 L0,13 L3.33333333,11 L10,15 L16.6666667,11 Z"
               class="icon icon-md text-gray-800 mr-3"
-            />button
+            />button1
           </button>
           <button
             class="btn btn-gray rounded-none"
@@ -98,10 +98,10 @@
     </div>-->
 
     <div
-      class="flex-grow flex bg-gray-100 overflow-hidden px-5 pt-3 pb-5 shadow-neuro1 rounded-xxl mx-8 mt-8 mb-16"
+      class="flex-grow flex bg-gray-200 overflow-hidden shadow-neuro1 m-8 rounded-xxl pt-5 pl-3"
     >
       <!-- <guide /> -->
-      <v-guide />
+      <v-guide class="flex-shrink-0 flex-grow-0 w-1/5 mr-48"/>
       <!-- <agenda /> -->
       <v-calandar
         :firstDayOfWeek="0"
@@ -147,17 +147,18 @@ export default {
     const currentMonthAndYear = ref("");
     function setCurrentDatesView(dates) {
       const { start, end } = dates;
+      console.log(start, end);
       currentMonthAndYear.value = isSameMonth(start, end)
-        ? format(start, "LLLL RRRR", { locale: fr })
+        ? format(start, "LLLL yyyy", { locale: fr })
         : isSameYear(start, end)
         ? `${format(start, "LLL", { locale: fr })} - ${format(
             end,
-            "LLL  RRRR",
+            "LLL  yyyy",
             { locale: fr }
           )}`
-        : `${format(start, "LLL RRRR", { locale: fr })} - ${format(
+        : `${format(start, "LLL yyyy", { locale: fr })} - ${format(
             end,
-            "LLL  RRRR",
+            "LLL  yyyy",
             { locale: fr }
           )}`;
     }
